@@ -1,19 +1,17 @@
-import React from "react";
-import { Pagination } from "antd";
+import React from 'react';
+import { Pagination } from 'antd';
 
-import "antd/dist/antd.css";
+import 'antd/dist/antd.css';
 
-import Card from "../Card";
+import Card from '../Card';
 
-import "./PostList.scss";
+import './PostList.scss';
 
-const PostList = () => {
-  return (
-    <div className="post-list">
-      <Card />
-      <Pagination size="small" />
-    </div>
-  );
-};
+const PostList = () => (
+  <div className="post-list">
+    <Card />
+    <Pagination size="small" />
+  </div>
+);
 
 export default PostList;
