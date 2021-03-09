@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import PostList from "../PostList";
+import PostList from '../PostList';
 
-import "./App.scss";
+import './App.scss';
 
 const App = () => {
   return (
