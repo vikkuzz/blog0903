@@ -18,6 +18,12 @@
     .card__content-title{
         display: flex;
     }
+    .card__content-text{
+        max-width: 680px;
+        font-size: 12px;
+        line-height: 22px;
+        color: rgba(0, 0, 0, 0.75);
+    }
     .card__content-tags{
         display:flex;
         .card__content-tags--elem1{
@@ -27,6 +33,7 @@
             font-weight: normal;
             font-size: 12px;
             line-height: 15px;
+            color:rgba(0, 0, 0, 0.5);
 
             display: flex;
             align-items: center;
@@ -41,6 +48,16 @@
         width:200px;
         justify-content: flex-end;
     }
+    .card__author-name{
+        font-size: 18px;
+        line-height: 28px;
+        color: rgba(0, 0, 0, 0.85);
+    }
+    .card__author-date{
+        font-size: 12px;
+        line-height: 22px;
+        color: rgba(0, 0, 0, 0.5);
+    }
     .card__heart{
         display: flex;
         padding: 0;
@@ -50,6 +67,9 @@
         background: transparent;
         align-items: center;
         padding: 1px;
+    }
+    .card__heart-counter{
+        color:rgba(0, 0, 0, 0.75);
     }
     .card__content-heart{
         margin-right: 5px;
@@ -64,6 +84,7 @@
         margin: 0 13px 0 0;
     }
     .card__author-avatar{
+        min-width: 46px;
         width: 46px;
         height: 46px;
         background: url('../../img/background-avatar.png') no-repeat center;
