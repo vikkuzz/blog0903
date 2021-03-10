@@ -7,7 +7,6 @@ const initialState = {
 const articles = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ARTICLES':
-      console.log(1);
       state.articles = action.articles;
       return { ...state };
 
