@@ -4,7 +4,7 @@ export default class Api {
   getArticles = async () => {
     const res = await fetch(`${this.baseAddress}articles`);
     const result = await res.json();
-    console.log(result);
+
     return result.articles;
   };
 }

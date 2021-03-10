@@ -9,7 +9,6 @@ export function articlesFetchData() {
     api
       .getArticles()
       .then((res) => {
-        console.log(res);
         dispatch(getAllArticles(res));
       })
       .catch((e) => e);
