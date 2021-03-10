@@ -11,7 +11,6 @@ import './PostList.scss';
 
 const PostList = () => {
   const cards = useSelector((state) => state.articles.articles);
-  console.log(cards);
 
   const elem = cards.map((item) => {
     const props = { ...item };
