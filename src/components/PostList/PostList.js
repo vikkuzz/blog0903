@@ -10,7 +10,8 @@ import Card from '../Card';
 import './PostList.scss';
 
 const PostList = () => {
-  const cards = useSelector((state) => state.articles.articles);
+  const cards = useSelector((state) => state.articlesReducer.articles);
+  const articlesCount = useSelector((state) => state.articlesReducer.articlesCount);
 
   const elem = cards.map((item) => {
     const props = { ...item };
@@ -20,7 +21,7 @@ const PostList = () => {
   return (
     <div className="post-list">
       {elem}
-      <Pagination size="small" />
+      <Pagination size="small" total={articlesCount / 20} />
     </div>
   );
 };

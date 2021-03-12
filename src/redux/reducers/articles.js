@@ -2,17 +2,20 @@
 
 const initialState = {
   articles: [],
+  articlesCount: 0,
 };
 
-const articles = (state = initialState, action) => {
+const articlesReducer = (state = initialState, action) => {
+  let { articles, articlesCount } = state;
   switch (action.type) {
     case 'GET_ARTICLES':
-      state.articles = action.articles;
-      return { ...state };
+      articles = action.articles.articles;
+      articlesCount = action.articles.articlesCount;
+      return { ...state, articles, articlesCount };
 
     default:
       return state;
   }
 };
 
-export default articles;
+export default articlesReducer;

@@ -5,6 +5,6 @@ export default class Api {
     const res = await fetch(`${this.baseAddress}articles`);
     const result = await res.json();
 
-    return result.articles;
+    return result;
   };
 }
