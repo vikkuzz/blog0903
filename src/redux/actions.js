@@ -4,10 +4,12 @@ const api = new Api();
 
 export const getAllArticles = (articles) => ({ type: 'GET_ARTICLES', articles });
 
-export function articlesFetchData() {
+export const getPage = (page) => ({ type: 'GET_PAGE', page });
+
+export function articlesFetchData(page) {
   return (dispatch) => {
     api
-      .getArticles()
+      .getArticles(page)
       .then((res) => {
         dispatch(getAllArticles(res));
       })

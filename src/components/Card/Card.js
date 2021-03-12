@@ -9,7 +9,16 @@ const Card = ({ card }) => {
 
   const { username } = author;
 
-  const tags = tagList.map((tag) => <div className="card__content-tags--elem1">{tag}</div>);
+  let idTag = 0;
+
+  const tags = tagList.map((tag) => {
+    idTag += 1;
+    return (
+      <div key={idTag} className="card__content-tags--elem1">
+        {tag}
+      </div>
+    );
+  });
 
   let { image } = author;
 
