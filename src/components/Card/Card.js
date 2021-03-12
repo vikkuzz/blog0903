@@ -1,12 +1,19 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 
 import './Card.scss';
 
 const Card = ({ card }) => {
-  const { title, author } = card;
+  const { title, author, createdAt } = card;
 
-  const { username, image } = author;
+  const { username } = author;
+
+  let { image } = author;
+
+  !image ? (image = 'background-avatar.png') : null;
+
+  const date = new Date(createdAt);
 
   return (
     <div className="card">
@@ -32,7 +39,7 @@ const Card = ({ card }) => {
       <div className="card__author">
         <div className="card__author-info">
           <div className="card__author-name">{username}</div>
-          <div className="card__author-date">some date</div>
+          <div className="card__author-date">{date.toDateString().slice(4)}</div>
         </div>
         <div className="card__author-avatar">
           <img src={image} width="46px" />
