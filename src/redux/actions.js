@@ -6,6 +6,8 @@ export const getAllArticles = (articles) => ({ type: 'GET_ARTICLES', articles })
 
 export const getPage = (page) => ({ type: 'GET_PAGE', page });
 
+export const catchError = () => ({ type: 'CATCH_ERROR' });
+
 export function articlesFetchData(page) {
   return (dispatch) => {
     api
@@ -13,6 +15,6 @@ export function articlesFetchData(page) {
       .then((res) => {
         dispatch(getAllArticles(res));
       })
-      .catch((e) => e);
+      .catch(() => dispatch(catchError()));
   };
 }
