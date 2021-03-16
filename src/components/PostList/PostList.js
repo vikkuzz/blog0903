@@ -19,7 +19,7 @@ const PostList = () => {
     dispatch(articlesFetchData(page));
   }, [dispatch, page]);
 
-  const elem = articles.map((item) => <Card card={item} key={item.createdAt} />);
+  const elem = articles.map((item) => <Card card={item} key={item.slug} />);
 
   const spinner = loading ? <Spinner /> : null;
   const errorMessage = error ? <Error /> : null;
@@ -29,6 +29,7 @@ const PostList = () => {
       {elem}
       {spinner}
       {errorMessage}
+
       <Pagination
         size="small"
         total={articlesCount / 20}

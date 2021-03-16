@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-expressions */
 
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+
+import { Link } from 'react-router-dom';
 
 import './Card.scss';
 
-const Card = ({ card }) => {
-  const { title, author, createdAt, favoritesCount, tagList, description } = card;
+const Card = ({ card, body }) => {
+  const { title, author, createdAt, favoritesCount, tagList, description, slug } = card;
 
   const { username } = author;
 
@@ -24,32 +27,39 @@ const Card = ({ card }) => {
 
   !image ? (image = 'background-avatar.png') : null;
 
+  const fullText = body ? card.body : null;
+
   const date = new Date(createdAt);
 
   return (
     <div className="card">
-      <div className="card__content">
-        <div className="card__content-header">
-          <div className="card__content-title">
-            <h5 className="card__title">{title}</h5>
-            <button type="button" className="card__heart">
-              <img alt="likes" className="card__content-heart" src="./heart.svg" />
-              <span className="card__heart-counter">{favoritesCount}</span>
-            </button>
+      <div className="card__header">
+        <div className="card__content">
+          <div className="card__content-header">
+            <div className="card__content-title">
+              <Link to={`/articles/:${slug}`}>
+                <h5 className="card__title">{title}</h5>
+              </Link>
+              <button type="button" className="card__heart">
+                <img alt="likes" className="card__content-heart" src="./heart.svg" />
+                <span className="card__heart-counter">{favoritesCount}</span>
+              </button>
+            </div>
+            <div className="card__content-tags">{tags}</div>
           </div>
-          <div className="card__content-tags">{tags}</div>
+          <div className="card__content-text">{description}</div>
         </div>
-        <div className="card__content-text">{description}</div>
+        <div className="card__author">
+          <div className="card__author-info">
+            <div className="card__author-name">{username}</div>
+            <div className="card__author-date">{date.toDateString().slice(4)}</div>
+          </div>
+          <div className="card__author-avatar">
+            <img alt="avatar" src={image} width="46px" />
+          </div>
+        </div>
       </div>
-      <div className="card__author">
-        <div className="card__author-info">
-          <div className="card__author-name">{username}</div>
-          <div className="card__author-date">{date.toDateString().slice(4)}</div>
-        </div>
-        <div className="card__author-avatar">
-          <img alt="avatar" src={image} width="46px" />
-        </div>
-      </div>
+      <ReactMarkdown className="card__fullText">{fullText}</ReactMarkdown>
     </div>
   );
 };

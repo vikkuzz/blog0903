@@ -1,8 +1,7 @@
 .card{
     display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    width:100%;
+    flex-direction: column;
+    width: 100%;
     max-width: 940px;
     height: 140px;
     background: white;
@@ -11,6 +10,17 @@
     box-shadow:0px 3px 6px 1px rgba(0,0,0,0.12);
     -webkit-box-shadow:0px 3px 6px 1px rgba(0,0,0,0.12);
     -moz-box-shadow:0px 3px 6px 1px rgba(0,0,0,0.12);
+
+    .card__header{
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        width:100%;
+    }
+
+    .card__fullText{
+        padding: 0 13px;
+    }
 
     .card__content{
         width: 100%;
