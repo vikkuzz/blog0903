@@ -7,9 +7,11 @@ const Header = () => (
   <header className="header">
     <Link to="/">О боже, это же бложег!</Link>
     <div>
-      <button type="button" className="header__login">
-        Логиниться
-      </button>
+      <Link to="/sign-up">
+        <button type="button" className="header__login">
+          Логиниться
+        </button>
+      </Link>
       <button type="button" className="header__registration">
         Зарегаться
       </button>
