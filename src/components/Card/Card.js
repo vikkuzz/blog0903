@@ -25,8 +25,6 @@ const Card = ({ card, body }) => {
     );
   });
 
-  //const { image } = author;
-
   const avatar = !image ? backgroundAvatar : image;
 
   const fullText = body ? card.body : null;
