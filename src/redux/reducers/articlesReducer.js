@@ -4,8 +4,6 @@ const initialState = {
   articles: [],
   articlesCount: 0,
   page: 1,
-  loading: true,
-  error: false,
 };
 
 const articlesReducer = (state = initialState, action) => {
@@ -14,14 +12,11 @@ const articlesReducer = (state = initialState, action) => {
     case 'GET_ARTICLES':
       articles = action.articles.articles;
       articlesCount = action.articles.articlesCount;
-      return { ...state, articles, articlesCount, loading: false };
+      return { ...state, articles, articlesCount };
 
     case 'GET_PAGE':
       page = action.page;
-      return { ...state, page, loading: true };
-
-    case 'CATCH_ERROR':
-      return { ...state, error: true };
+      return { ...state, page };
 
     default:
       return state;

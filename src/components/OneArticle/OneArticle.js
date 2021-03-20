@@ -6,7 +6,7 @@ import Card from '../Card';
 const OneArticle = ({ itemId }) => {
   const { articles } = useSelector((state) => state.articlesReducer);
 
-  const elem = articles.filter((item) => item.slug === itemId.slice(1));
+  const elem = articles.filter((item) => item.slug === itemId);
 
   return (
     <>

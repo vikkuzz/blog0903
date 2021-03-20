@@ -13,7 +13,8 @@ import './PostList.scss';
 
 const PostList = () => {
   const dispatch = useDispatch();
-  const { articles, articlesCount, page, loading, error } = useSelector((state) => state.articlesReducer);
+  const { articles, articlesCount, page, error } = useSelector((state) => state.articlesReducer);
+  const { loading } = useSelector((state) => state.loadingReducer);
 
   useEffect(() => {
     dispatch(articlesFetchData(page));

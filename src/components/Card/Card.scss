@@ -20,6 +20,8 @@
 
     .card__fullText{
         padding: 0 13px;
+       
+        overflow-wrap: anywhere;
     }
 
     .card__content{
@@ -37,7 +39,9 @@
     }
     .card__content-tags{
         display:flex;
-        .card__content-tags--elem1{
+        max-width: 100%;
+        flex-wrap: wrap;
+        .card__content-tags--elem{
 
             font-family: Inter;
             font-style: normal;
@@ -51,7 +55,7 @@
             border: 1px solid rgba(0, 0, 0, 0.5);
             border-radius: 2px;
             padding:2px;
-            margin-right: 8px;
+            margin: 2px 4px;
         }
     }
     .card__author{
@@ -93,6 +97,8 @@
         line-height: 28px;
         color: #1890FF;
         margin: 0 13px 0 0;
+        max-width: 600px;
+        overflow-wrap: anywhere;
     }
     .card__author-avatar{
         min-width: 46px;

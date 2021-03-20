@@ -7,4 +7,23 @@ export default class Api {
 
     return result;
   };
+
+  postNewUser = async (data) => {
+    const user = {
+      user: {
+        ...data,
+      },
+    };
+
+    const res = await fetch(`https://conduit.productionready.io/api/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(user),
+    });
+    const result = await res.json();
+
+    return result;
+  };
 }
