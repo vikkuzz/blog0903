@@ -14,13 +14,43 @@ export default class Api {
         ...data,
       },
     };
-
-    const res = await fetch(`https://conduit.productionready.io/api/users`, {
+    const res = await fetch(`${this.baseAddress}users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify(user),
+    });
+    const result = await res.json();
+
+    return result;
+  };
+
+  loginUser = async (data) => {
+    const user = {
+      user: {
+        ...data,
+      },
+    };
+    const res = await fetch(`${this.baseAddress}users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(user),
+    });
+    const result = await res.json();
+
+    return result;
+  };
+
+  getCurrentUser = async (token) => {
+    const res = await fetch(`${this.baseAddress}user`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
     });
     const result = await res.json();
 

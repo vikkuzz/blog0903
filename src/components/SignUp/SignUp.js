@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -12,6 +12,7 @@ import './SignUp.scss';
 const SignUp = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, getValues, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -33,6 +34,10 @@ const SignUp = () => {
     </div>
   );
   const isLoading = loading ? load : null;
+
+  if(user){
+    return <Redirect to='/'/>
+  }
 
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
 
@@ -108,7 +113,7 @@ const SignUp = () => {
       </button>
 
       <span className="sign-up__have-accaunt">
-        Уже есть аккаунт? <Link to="-">Залогиниться</Link>
+        Уже есть аккаунт? <Link to="/sign-in">Залогиниться</Link>
       </span>
       {isLoading}
       {gotAnError}

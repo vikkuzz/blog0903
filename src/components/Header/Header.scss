@@ -9,7 +9,7 @@
     height: 80px;
     padding: 0 22px;   
 
-    .header__login, .header__registration, .header__link{
+    .header__login, .header__registration, .header__link, .header__profile, .header__create-article, .header__logout{
 
         outline: none;
         border:none;
@@ -27,18 +27,18 @@
         line-height: 28px;
     }
 
-    .header__login:active, .header__registration:active, .header__login:focus, .header__registration:focus,
-    .header__link:active, .header__link:focus{
+    .header__button:active,  .header__button:focus{
         border: 1px solid #52C41A;
         box-sizing: border-box;
         border-radius: 5px;
         color:#52C41A;
-    }
-
-    .header__login:active, .header__registration:active{
         transform: translateY(2px);
     }
-    .header__login:hover, .header__registration:hover, .header__link:hover{
+
+    // .header__login:active, .header__registration:active{
+    //     transform: translateY(2px);
+    // }
+    .header__button:hover{
         animation: pulse 2s;
         color:#52C41A;
     }
