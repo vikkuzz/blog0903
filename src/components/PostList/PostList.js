@@ -36,6 +36,7 @@ const PostList = () => {
         total={articlesCount / 20}
         current={page}
         onChange={(value) => {
+          window.scroll(0, 0);
           dispatch(getPage(value));
         }}
       />

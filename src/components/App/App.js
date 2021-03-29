@@ -10,6 +10,7 @@ import PostList from '../PostList';
 import OneArticle from '../OneArticle';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
+import Profile from '../Profile';
 
 import './App.scss';
 
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/articles" component={PostList} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/sign-in" component={SignIn} exact />
+        <Route path="/profile" component={Profile} exact />
       </div>
     </BrowserRouter>
   );
