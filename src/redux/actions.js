@@ -9,6 +9,8 @@ export const getPage = (page) => ({ type: 'GET_PAGE', page });
 
 export const catchError = (error) => ({ type: 'CATCH_ERROR', error });
 
+export const clearErrorMessage = () => ({ type: 'CLEAR_ERROR_MESSAGE' });
+
 export const loginUser = (user) => ({ type: 'LOGIN_USER', user });
 
 export const showLoading = () => ({ type: 'SHOW_LOADING' });
@@ -29,6 +31,7 @@ function __getData(apiMethod, action, data, token = null) {
           dispatch(showLoading());
           dispatch(action(res));
           dispatch(finishLoading());
+          dispatch(clearErrorMessage());
         }
       })
       .catch((error) => {

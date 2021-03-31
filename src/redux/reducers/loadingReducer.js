@@ -1,7 +1,7 @@
 const initialState = {
   loading: true,
   error: false,
-  errorMessage: '',
+  errorMessage: null,
 };
 
 const loadingReducer = (state = initialState, action) => {
@@ -16,6 +16,10 @@ const loadingReducer = (state = initialState, action) => {
     case 'CATCH_ERROR':
       errorMessage = action.error;
       return { ...state, error: true, loading: false, errorMessage };
+
+    case 'CLEAR_ERROR_MESSAGE':
+      errorMessage = null;
+      return { ...state, errorMessage };
 
     default:
       return state;

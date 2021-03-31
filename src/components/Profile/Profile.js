@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -11,7 +12,7 @@ import './Profile.scss';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.userReducer);
+  const { token, user } = useSelector((state) => state.userReducer);
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { errorMessage } = useSelector((state) => state.loadingReducer);
   const { register, handleSubmit, errors } = useForm();
@@ -19,6 +20,8 @@ const Profile = () => {
   const onSubmit = (data) => {
     dispatch(updateProfile(data, token));
   };
+
+  console.log(errorMessage);
 
   const load = (
     <div className="profile__loading">
@@ -28,6 +31,9 @@ const Profile = () => {
   const isLoading = loading ? load : null;
 
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+  if (!user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <form className="profile" onSubmit={handleSubmit(onSubmit)}>

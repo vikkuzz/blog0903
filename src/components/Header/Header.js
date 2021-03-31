@@ -1,7 +1,8 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 import { logout } from '../../redux/actions';
@@ -28,7 +29,6 @@ const Header = () => {
     avatar = !user.image ? backgroundAvatar : user.image;
     username = user.username;
   }
-
   const noLogin = (
     <div>
       <Link to="/sign-up">
@@ -59,11 +59,9 @@ const Header = () => {
         </button>
       </Link>
 
-      <Link to="/">
-        <button type="button" className="header__logout header__button" onClick={handleClick}>
-          Разлогиниться
-        </button>
-      </Link>
+      <button type="button" className="header__logout header__button" onClick={handleClick}>
+        Разлогиниться
+      </button>
     </div>
   );
 

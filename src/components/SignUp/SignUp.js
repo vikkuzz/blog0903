@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { Link,Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useCookies } from 'react-cookie';
 
-import { registrationFetchData } from '../../redux/actions';
+import { registrationFetchData, getCurrentUser } from '../../redux/actions';
 import Spinner from '../Spinner';
 
 import './SignUp.scss';
@@ -14,10 +15,17 @@ const SignUp = () => {
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, getValues, errors } = useForm();
+  const [cookies, setCookie] = useCookies();
 
   const onSubmit = (data) => {
     dispatch(registrationFetchData(data));
   };
+
+  useEffect(() => {
+    if (user) {
+      setCookie('token', user.token, { path: '/' });
+    }
+  });
 
   const watchPassword = watch('password', false);
   const watchPasswordRepeat = watch('passwordRepeat', false);
@@ -35,8 +43,8 @@ const SignUp = () => {
   );
   const isLoading = loading ? load : null;
 
-  if(user){
-    return <Redirect to='/'/>
+  if (user) {
+    return <Redirect to="/" />;
   }
 
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
