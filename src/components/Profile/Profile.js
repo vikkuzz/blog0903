@@ -1,21 +1,23 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { registrationFetchData } from '../../redux/actions';
+import { updateProfile } from '../../redux/actions';
 import Spinner from '../Spinner';
 
 import './Profile.scss';
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.userReducer);
   const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { errorMessage } = useSelector((state) => state.loadingReducer);
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
-    dispatch(registrationFetchData(data));
+    dispatch(updateProfile(data, token));
   };
 
   const load = (
@@ -38,8 +40,9 @@ const Profile = () => {
             name="username"
             type="text"
             placeholder="Юзернейм"
-            ref={register({ required: false, minLength: 3, maxLength: 20 })}
+            ref={register({ required: true, minLength: 3, maxLength: 20 })}
           />
+          {errors.username && <p className="profile__rulls">никнейм минимум из 3 символов</p>}
         </label>
 
         <label className="profile__form-label">
@@ -49,7 +52,7 @@ const Profile = () => {
             type="email"
             name="email"
             placeholder="Электронная почта"
-            ref={register({ required: false })}
+            ref={register({ required: true })}
           />
         </label>
 
@@ -58,7 +61,7 @@ const Profile = () => {
           <input
             className="profile__form-input"
             type="password"
-            ref={register({ required: false, minLength: 6, maxLength: 40 })}
+            ref={register({ required: true, minLength: 6, maxLength: 40 })}
             name="password"
             placeholder="Пароль"
           />
@@ -71,7 +74,7 @@ const Profile = () => {
             className="profile__form-input"
             type="url"
             ref={register({ required: false })}
-            name="url"
+            name="image"
             placeholder="URL"
           />
           {errors.password && <p className="profile__rulls">URL должен быть валидным</p>}
@@ -81,6 +84,7 @@ const Profile = () => {
       <button className="profile__submit" type="submit">
         Сохранить
       </button>
+
       {isLoading}
       {gotAnError}
     </form>

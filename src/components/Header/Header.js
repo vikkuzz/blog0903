@@ -55,7 +55,7 @@ const Header = () => {
       <Link to="/profile">
         <button type="button" className="header__profile header__button">
           <span className="header__username">{username}</span>
-          <img alt="avatar" src={avatar} />
+          <img className="header__avatar" alt="avatar" src={avatar} />
         </button>
       </Link>
 

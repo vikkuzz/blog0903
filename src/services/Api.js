@@ -4,7 +4,6 @@ export default class Api {
   getArticles = async (page) => {
     const res = await fetch(`${this.baseAddress}articles?offset=${page}`);
     const result = await res.json();
-
     return result;
   };
 
@@ -51,6 +50,24 @@ export default class Api {
         'Content-Type': 'application/json;charset=utf-8',
         Authorization: `Token ${token}`,
       },
+    });
+    const result = await res.json();
+    return result;
+  };
+
+  updateProfile = async (data, token) => {
+    const user = {
+      user: {
+        ...data,
+      },
+    };
+    const res = await fetch(`${this.baseAddress}user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(user),
     });
     const result = await res.json();
 

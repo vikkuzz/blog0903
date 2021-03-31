@@ -6,11 +6,6 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   let { token, user } = state;
   switch (action.type) {
-    // case 'GET_TOKEN':
-    //   token = action.user.user.token;
-    //   console.log(token)
-    //   return { ...state, token };
-
     case 'LOGIN_USER':
       user = action.user.user;
       token = action.user.user.token;
@@ -18,6 +13,10 @@ const userReducer = (state = initialState, action) => {
 
     case 'LOGOUT':
       user = null;
+      return { ...state, user };
+
+    case 'UPDATE_USER_PROFILE':
+      user = action.data.user;
       return { ...state, user };
 
     default:

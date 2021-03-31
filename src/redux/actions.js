@@ -7,9 +7,7 @@ export const getAllArticles = (articles) => ({ type: 'GET_ARTICLES', articles })
 
 export const getPage = (page) => ({ type: 'GET_PAGE', page });
 
-export const catchError = () => ({ type: 'CATCH_ERROR' });
-
-// export const getUser = (user) => ({ type: 'GET_TOKEN', user });
+export const catchError = (error) => ({ type: 'CATCH_ERROR', error });
 
 export const loginUser = (user) => ({ type: 'LOGIN_USER', user });
 
@@ -19,15 +17,23 @@ export const finishLoading = () => ({ type: 'FINISH_LOADING' });
 
 export const logout = () => ({ type: 'LOGOUT' });
 
-function __getData(apiMethod, action, data) {
+export const updateUserProfile = (data) => ({ type: 'UPDATE_USER_PROFILE', data });
+
+function __getData(apiMethod, action, data, token = null) {
   return (dispatch) => {
-    apiMethod(data)
+    apiMethod(data, token)
       .then((res) => {
-        dispatch(showLoading());
-        dispatch(action(res));
-        dispatch(finishLoading());
+        if (res.errors) {
+          dispatch(catchError(res.errors));
+        } else {
+          dispatch(showLoading());
+          dispatch(action(res));
+          dispatch(finishLoading());
+        }
       })
-      .catch(() => dispatch(catchError()));
+      .catch((error) => {
+        dispatch(catchError(error));
+      });
   };
 }
 
@@ -38,3 +44,5 @@ export const registrationFetchData = (data) => __getData(api.postNewUser, loginU
 export const loginFetchData = (data) => __getData(api.loginUser, loginUser, data);
 
 export const getCurrentUser = (token) => __getData(api.getCurrentUser, loginUser, token);
+
+export const updateProfile = (data, token) => __getData(api.updateProfile, updateUserProfile, data, token);

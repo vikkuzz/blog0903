@@ -41,7 +41,7 @@ const Card = ({ card, body }) => {
                 <h5 className="card__title">{title}</h5>
               </Link>
               <button type="button" className="card__heart">
-                <img alt="likes" className="card__content-heart" src={heart} />
+                <img alt="likes" loading="lazy" className="card__content-heart" src={heart} />
                 <span className="card__heart-counter">{favoritesCount}</span>
               </button>
             </div>
