@@ -4,6 +4,7 @@ const initialState = {
   articles: [],
   articlesCount: 0,
   page: 1,
+  tags: 1,
 };
 
 const articlesReducer = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const articlesReducer = (state = initialState, action) => {
     case 'GET_PAGE':
       page = action.page;
       return { ...state, page };
+
+    // case 'ADD_TAG':
+    //   tags += 1;
+    //   return { ...state, tags };
 
     default:
       return state;

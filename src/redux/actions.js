@@ -21,6 +21,8 @@ export const logout = () => ({ type: 'LOGOUT' });
 
 export const updateUserProfile = (data) => ({ type: 'UPDATE_USER_PROFILE', data });
 
+export const addTag = () => ({ type: 'ADD_TAG' });
+
 function __getData(apiMethod, action, data, token = null) {
   return (dispatch) => {
     apiMethod(data, token)

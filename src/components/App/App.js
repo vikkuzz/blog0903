@@ -11,6 +11,7 @@ import OneArticle from '../OneArticle';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 import Profile from '../Profile';
+import UserArticle from '../UserArticle';
 
 import './App.scss';
 
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/sign-in" component={SignIn} exact />
         <Route path="/profile" component={Profile} exact />
+        <Route path="/new-article" component={UserArticle} exact />
       </div>
     </BrowserRouter>
   );

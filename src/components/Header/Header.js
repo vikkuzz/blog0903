@@ -46,7 +46,7 @@ const Header = () => {
 
   const login = (
     <div>
-      <Link to="/sign-up">
+      <Link to="/new-article">
         <button type="button" className="header__create-article header__button">
           Написать статью
         </button>
