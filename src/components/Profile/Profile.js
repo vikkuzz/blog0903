@@ -1,11 +1,10 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { updateProfile } from '../../redux/actions';
+import { updateProfile, clearErrorMessage } from '../../redux/actions';
 import Spinner from '../Spinner';
 
 import './Profile.scss';
@@ -15,22 +14,38 @@ const Profile = () => {
   const { token, user } = useSelector((state) => state.userReducer);
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { errorMessage } = useSelector((state) => state.loadingReducer);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
+
+  let serverUsernameError = false;
+  let serverEmailError = false;
+
+  const usernameErrorMessage = 'такое имя уже существует';
+  const emailErrorMessage = 'такая почта уже зарегистрирована';
+
+  let errorUserMessage = null;
+  let errorEmailMessage = null;
+
+  if (errorMessage) {
+    const { username, email } = errorMessage;
+    username ? (serverUsernameError = true) : (serverUsernameError = false);
+    errorUserMessage = username ? usernameErrorMessage : null;
+    email ? (serverEmailError = true) : (serverEmailError = false);
+    errorEmailMessage = email ? emailErrorMessage : null;
+  }
 
   const onSubmit = (data) => {
     dispatch(updateProfile(data, token));
   };
-
-  console.log(errorMessage);
 
   const load = (
     <div className="profile__loading">
       <Spinner />
     </div>
   );
-  const isLoading = loading ? load : null;
 
+  const isLoading = loading ? load : null;
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+
   if (!user) {
     return <Redirect to="/" />;
   }
@@ -42,24 +57,30 @@ const Profile = () => {
         <label className="profile__form-label">
           <span className="profile__title-form">Юзернейм</span>
           <input
-            className="profile__form-input"
+            className={serverUsernameError ? 'profile__form-input profile__input-invalid' : 'profile__form-input'}
             name="username"
             type="text"
             placeholder="Юзернейм"
             ref={register({ required: true, minLength: 3, maxLength: 20 })}
+            onChange={() => dispatch(clearErrorMessage())}
           />
-          {errors.username && <p className="profile__rulls">никнейм минимум из 3 символов</p>}
+          {errors?.username?.types?.required && <span className="profile__rulls">обязательно к заполнению</span>}
+          {errors?.username?.types?.minLength && <span className="profile__rulls">минимум 3 символа</span>}
+          {errors?.username?.types?.maxLength && <span className="profile__rulls">максимум 20 символов</span>}
+          <span className="profile__rulls">{errorUserMessage}</span>
         </label>
 
         <label className="profile__form-label">
           <span className="profile__title-form">Электронная почта</span>
           <input
-            className="profile__form-input"
+            className={serverEmailError ? 'profile__form-input profile__input-invalid' : 'profile__form-input'}
             type="email"
             name="email"
             placeholder="Электронная почта"
             ref={register({ required: true })}
           />
+          {errors?.email?.types?.required && <span className="profile__rulls">обязательно к заполнению</span>}
+          <span className="profile__rulls">{errorEmailMessage}</span>
         </label>
 
         <label className="profile__form-label">
@@ -71,7 +92,9 @@ const Profile = () => {
             name="password"
             placeholder="Пароль"
           />
-          {errors.password && <p className="profile__rulls">пароль должен состоять минимум из 6 символов</p>}
+          {errors?.password?.types?.minLength && (
+            <span className="profile__rulls">должен быть от 6 до 40 символов</span>
+          )}
         </label>
 
         <label className="profile__form-label">
@@ -83,7 +106,7 @@ const Profile = () => {
             name="image"
             placeholder="URL"
           />
-          {errors.password && <p className="profile__rulls">URL должен быть валидным</p>}
+          {errors.image && <p className="profile__rulls">URL должен быть валидным</p>}
         </label>
       </fieldset>
 
