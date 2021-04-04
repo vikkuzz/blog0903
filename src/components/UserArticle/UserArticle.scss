@@ -80,8 +80,12 @@ input[type="text"]::-webkit-input-placeholder {
         border: 1px solid #D9D9D9;
         box-sizing: border-box;
         border-radius: 4px;
+        min-width: 50px;        
         width: 100%;
         height: 40px;              
+    }
+    .article__tag{
+        max-width: 145px;
     }
 
     .article__input-invalid{
@@ -115,5 +119,10 @@ input[type="text"]::-webkit-input-placeholder {
     .article__add-tag{
         margin:0 0 0 10px;
     }
-
+    .article__del-button--hide{
+        display: none;
+    }
+    .article__del-button--view{
+        display: block;
+    }
 }

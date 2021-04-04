@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable prefer-const */
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-unused-vars */
@@ -16,45 +18,52 @@ const UserArticle = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { user } = useSelector((state) => state.userReducer);
-  const { watch, register, handleSubmit, getValues, errors } = useForm();
+  const { watch, register, handleSubmit, getValues, errors, setValue } = useForm();
   const [cookies, setCookie] = useCookies();
+
+  let watchTag = watch('thisistag', false);
 
   const onSubmit = (data) => {
     dispatch(registrationFetchData(data));
   };
 
-  let [numOfTags, setNumOfTags] = useState(1);
-  console.log(numOfTags);
-  let copy = [];
-  for (let i = 0; i < numOfTags; i++) {
-    copy.push(1);
-  }
+  let [textTags, setTextOfTags] = useState([]);
 
-  const Tag = () => (
-    <label className="article__form-label article__label-tag">
-      <input
-        className="article__form-input"
-        name="title"
-        type="text"
-        placeholder="тэг"
-        ref={register({ required: true })}
-      />
-      <button
-        className="article__submit article__add-tag"
-        type="button"
-        style={{ background: '#F5222D' }}
-        onClick={() => setNumOfTags(numOfTags - 1)}
-      >
-        Удалить
-      </button>
-      <button className="article__submit article__add-tag" type="button" onClick={() => setNumOfTags(numOfTags + 1)}>
-        Добавить
-      </button>
-    </label>
-  );
+  let countIdx = 0;
 
-  const elem = copy.map((item) => {
-    return <Tag />;
+  const newTextTags = (text, arr) => {
+    let result = arr.filter((elem) => elem !== text);
+    return result;
+  };
+
+  const deleteTag = (arr) => {
+    let elem = arr[arr.length - 1];
+    let result = arr.slice(0, arr.length - 1);
+    setTextOfTags(result);
+    setValue('thisistag', elem);
+  };
+
+  const ElemOfTags = ({ text }) => {
+    return (
+      <div className="article__form-label article__label-tag ">
+        <div className="article__form-input article__tag" style={{ textAlign: 'center' }}>
+          {text}
+        </div>
+        <button
+          className="article__submit article__add-tag"
+          type="button"
+          style={{ background: '#F5222D' }}
+          onClick={() => setTextOfTags(newTextTags(text, textTags))}
+        >
+          Удалить
+        </button>
+      </div>
+    );
+  };
+
+  const elem = textTags.map((item) => {
+    countIdx += 1;
+    return <ElemOfTags key={countIdx} text={item} />;
   });
 
   const load = (
@@ -62,8 +71,11 @@ const UserArticle = () => {
       <Spinner />
     </div>
   );
-  const isLoading = loading ? load : null;
 
+  let disableStyle = 'article__del-button--hide';
+  textTags.length > 0 ? (disableStyle = 'article__del-button--view') : (disableStyle = 'article__del-button--hide');
+
+  const isLoading = loading ? load : null;
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
 
   return (
@@ -106,6 +118,37 @@ const UserArticle = () => {
       <fieldset className="article__form">
         <span className="article__title-form">Добавить тэг</span>
         {elem}
+        <label className="article__form-label article__label-tag">
+          <input
+            className="article__form-input article__tag"
+            name="thisistag"
+            type="text"
+            placeholder="тэг"
+            ref={register({ required: true })}
+          />
+          <button
+            className={`article__submit article__add-tag ${disableStyle}`}
+            type="button"
+            style={{ background: '#F5222D' }}
+            onClick={() => deleteTag(textTags)}
+          >
+            Удалить
+          </button>
+          <button
+            className="article__submit article__add-tag"
+            type="button"
+            onClick={() => {
+              textTags.includes(watchTag)
+                ? setValue('thisistag', '')
+                : !watchTag
+                ? null
+                : setTextOfTags([...textTags, watchTag]);
+              setValue('thisistag', '');
+            }}
+          >
+            Добавить
+          </button>
+        </label>
       </fieldset>
 
       <button className="article__submit" type="submit">
