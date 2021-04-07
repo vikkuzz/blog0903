@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-const */
+/* eslint-disable guard-for-in */
 /* eslint-disable no-param-reassign */
 
 const initialState = {
@@ -5,10 +8,11 @@ const initialState = {
   articlesCount: 0,
   page: 1,
   tags: 1,
+  editArticle: null,
 };
 
 const articlesReducer = (state = initialState, action) => {
-  let { articles, articlesCount, page } = state;
+  let { articles, articlesCount, page, editArticle } = state;
   switch (action.type) {
     case 'GET_ARTICLES':
       articles = action.articles.articles;
@@ -19,9 +23,9 @@ const articlesReducer = (state = initialState, action) => {
       page = action.page;
       return { ...state, page };
 
-    // case 'ADD_TAG':
-    //   tags += 1;
-    //   return { ...state, tags };
+    case 'GET_EDIT_MY_ARTICLE':
+      editArticle = action.card;
+      return { ...state, editArticle };
 
     default:
       return state;

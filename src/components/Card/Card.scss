@@ -73,6 +73,9 @@
         line-height: 22px;
         color: rgba(0, 0, 0, 0.5);
     }
+    .card__author-info{
+        margin-left: 20px;
+    }
     .card__heart{
         display: flex;
         padding: 0;
@@ -105,5 +108,53 @@
         width: 46px;
         height: 46px;
         margin-left: 14px;
+    }
+    .card__submit{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        background: #1890FF;
+        border-radius: 4px;
+        height: 29px;
+        margin-top: 5px;
+        border: none;
+        color: white;
+        font-size: 12px;
+    }
+    .card__buttons{
+        position: relative;
+    }
+    .card__modal{
+        top:30px;
+        position: absolute;
+        background: white;
+        border: 1px solid tomato;
+        border-radius: 3px;
+    }
+
+    .card__modal--view{
+        background:rgb(226, 223, 223);
+        position: absolute;
+        border-radius: 5px;
+        padding: 5px;
+        top: -3px;
+        left: -3px;
+        z-index: 100;
+        opacity: 1;
+        transition-property: opacity;
+        transition-duration: 0.5s;
+        box-shadow:10px 5px 5px #bbb5b5;
+    }
+    .card__modal--hide{
+        position: absolute;
+        top: 0;
+        z-index: -100;
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 3s;
+    }
+    .card__modal-buttons{
+        display: flex;
+        justify-content: space-around;
     }
 }

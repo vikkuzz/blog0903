@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { getEditMyArticle, deleteArticle } from '../../redux/actions';
 
 import heart from '../../img/heart.svg';
 import backgroundAvatar from '../../img/background-avatar.png';
@@ -11,10 +15,14 @@ import './Card.scss';
 
 const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, tagList, description, slug } = card;
-
+  const { user } = useSelector((state) => state.userReducer);
+  let [showModal, setShowModal] = useState(false);
   const { username, image } = author;
-
   let idTag = 0;
+  let articleEditButtons = null;
+  const avatar = !image ? backgroundAvatar : image;
+  const fullText = body ? card.body : null;
+  const dispatch = useDispatch();
 
   const tags = tagList.map((tag) => {
     idTag += 1;
@@ -25,9 +33,58 @@ const Card = ({ card, body }) => {
     );
   });
 
-  const avatar = !image ? backgroundAvatar : image;
+  let disableStyle = 'card__modal--hide';
+  showModal ? (disableStyle = 'card__modal--view') : (disableStyle = 'card__modal--hide');
 
-  const fullText = body ? card.body : null;
+  const modal = (
+    <div className={disableStyle}>
+      <span>Действительно удалить?</span>
+      <div className="card__modal-buttons">
+        <button
+          type="submit"
+          onClick={() => {
+            dispatch(deleteArticle(user.token, slug));
+          }}
+        >
+          ДА
+        </button>
+        <button
+          type="submit"
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          НЕТ
+        </button>
+      </div>
+    </div>
+  );
+
+  const buttons = (
+    <div className="card__buttons">
+      <button
+        className="card__submit"
+        type="button"
+        style={{ background: '#F5222D' }}
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        Удалить
+      </button>
+
+      <Link to={`/articles/${slug}/edit`}>
+        <button className="card__submit" type="button" onClick={() => dispatch(getEditMyArticle(card))}>
+          Редактировать
+        </button>
+      </Link>
+      {modal}
+    </div>
+  );
+
+  if (user) {
+    articleEditButtons = user.username === username ? buttons : null;
+  }
 
   const date = new Date(createdAt);
 
@@ -53,6 +110,7 @@ const Card = ({ card, body }) => {
           <div className="card__author-info">
             <div className="card__author-name">{username}</div>
             <div className="card__author-date">{date.toDateString().slice(4)}</div>
+            {articleEditButtons}
           </div>
           <div className="card__author-avatar">
             <img

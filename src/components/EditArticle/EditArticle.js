@@ -6,26 +6,28 @@ import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { createNewArticle } from '../../redux/actions';
+import { editMyArticle } from '../../redux/actions';
 import Spinner from '../Spinner';
 
-import './UserArticle.scss';
+import './EditArticle.scss';
 
-const UserArticle = () => {
+const EditArticle = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { editArticle } = useSelector((state) => state.articlesReducer);
+  const { tagList } = editArticle;
   const { token } = useSelector((state) => state.userReducer);
-  const { watch, register, handleSubmit, errors, setValue } = useForm();
+  const { watch, register, handleSubmit, setValue } = useForm();
 
   const watchTag = watch('tagList', false);
-  const [textTags, setTextOfTags] = useState([]);
+  const [textTags, setTextOfTags] = useState(tagList);
   let countIdx = 0;
-  let disableStyle = 'article__del-button--hide';
+  let disableStyle = 'edit-article__del-button--hide';
 
   const onSubmit = (data) => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
-    dispatch(createNewArticle(articleData, token));
+    dispatch(editMyArticle(articleData, token, editArticle.slug));
   };
 
   const newTextTags = (text, arr) => {
@@ -41,12 +43,12 @@ const UserArticle = () => {
   };
 
   const ElemOfTags = ({ text }) => (
-    <div className="article__form-label article__label-tag ">
-      <div className="article__form-input article__tag" style={{ textAlign: 'center' }}>
+    <div className="edit-article__form-label edit-article__label-tag ">
+      <div className="edit-article__form-input edit-article__tag" style={{ textAlign: 'center' }}>
         {text}
       </div>
       <button
-        className="article__submit article__add-tag"
+        className="edit-article__submit edit-article__add-tag"
         type="button"
         style={{ background: '#F5222D' }}
         onClick={() => setTextOfTags(newTextTags(text, textTags))}
@@ -56,71 +58,76 @@ const UserArticle = () => {
     </div>
   );
 
-  const elem = textTags.map((item) => {
+  const elem = textTags.map((item, i) => {
     countIdx += 1;
     return <ElemOfTags key={countIdx} text={item} />;
   });
 
   const load = (
-    <div className="article__loading">
+    <div className="edit-article__loading">
       <Spinner />
     </div>
   );
 
-  textTags.length > 0 ? (disableStyle = 'article__del-button--view') : (disableStyle = 'article__del-button--hide');
+  textTags.length > 0
+    ? (disableStyle = 'edit-article__del-button--view')
+    : (disableStyle = 'edit-article__del-button--hide');
   const isLoading = loading ? load : null;
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
 
   return (
-    <form className="article" onSubmit={handleSubmit(onSubmit)}>
-      <legend className="article__title">Создать новую статью</legend>
-      <fieldset className="article__form">
-        <label className="article__form-label">
-          <span className="article__title-form">Название</span>
+    <form className="edit-article" onSubmit={handleSubmit(onSubmit)}>
+      <legend className="edit-article__title">Редактировать статью</legend>
+      <fieldset className="edit-article__form">
+        <label className="edit-article__form-label">
+          <span className="edit-article__title-form">Название</span>
           <input
-            className="article__form-input"
+            className="edit-article__form-input"
             name="title"
             type="text"
             placeholder="Название статьи"
             ref={register({ required: true })}
+            defaultValue={editArticle.title}
           />
         </label>
 
-        <label className="article__form-label">
-          <span className="article__title-form">Краткое описание</span>
+        <label className="edit-article__form-label">
+          <span className="edit-article__title-form">Краткое описание</span>
           <input
-            className="article__form-input"
+            className="edit-article__form-input"
             type="text"
             name="description"
             placeholder="Краткое описание"
             ref={register({ required: true })}
+            defaultValue={editArticle.description}
           />
         </label>
 
-        <label className="article__form-label">
-          <span className="article__title-form">Текст статьи</span>
+        <label className="edit-article__form-label">
+          <span className="edit-article__title-form">Текст статьи</span>
           <textarea
-            className="article__form-input article__textarea"
+            className="edit-article__form-input edit-article__textarea"
             ref={register({ required: true })}
             name="body"
             placeholder="Текст статьи"
             autoCapitalize="true"
+            defaultValue={editArticle.body}
           />
         </label>
       </fieldset>
-      <fieldset className="article__form">
-        <span className="article__title-form">Добавить тэг</span>
+      <fieldset className="edit-article__form">
+        <span className="edit-article__title-form">Добавить тэг</span>
         {elem}
-        <label className="article__form-label article__label-tag">
+        <label className="edit-article__form-label edit-article__label-tag">
           <input
-            className="article__form-input article__tag"
+            className="edit-article__form-input edit-article__tag"
             name="tagList"
             type="text"
             placeholder="тэг"
             ref={register({ required: false })}
           />
           <button
-            className={`article__submit article__add-tag ${disableStyle}`}
+            className={`edit-article__submit edit-article__add-tag ${disableStyle}`}
             type="button"
             style={{ background: '#F5222D' }}
             onClick={() => deleteTag(textTags)}
@@ -128,7 +135,7 @@ const UserArticle = () => {
             Удалить
           </button>
           <button
-            className="article__submit article__add-tag"
+            className="edit-article__submit edit-article__add-tag"
             type="button"
             onClick={() => {
               textTags.includes(watchTag)
@@ -144,14 +151,13 @@ const UserArticle = () => {
         </label>
       </fieldset>
 
-      <button className="article__submit" type="submit">
-        Создать
+      <button className="edit-article__submit" type="submit">
+        Отправить
       </button>
-
       {isLoading}
       {gotAnError}
     </form>
   );
 };
 
-export default UserArticle;
+export default EditArticle;

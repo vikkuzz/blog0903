@@ -21,9 +21,15 @@ export const logout = () => ({ type: 'LOGOUT' });
 
 export const updateUserProfile = (data) => ({ type: 'UPDATE_USER_PROFILE', data });
 
-function __getData(apiMethod, action, data, token = null) {
+export const createArticle = (data) => ({ type: 'CREATE_ARTICLE', data });
+
+export const editArticle = (card) => ({ type: 'EDIT_ARTICLE', card });
+
+export const getEditMyArticle = (card) => ({ type: 'GET_EDIT_MY_ARTICLE', card });
+
+function __getData(apiMethod, action = null, data = null, token = null, endpoint = null) {
   return (dispatch) => {
-    apiMethod(data, token)
+    apiMethod(data, token, endpoint)
       .then((res) => {
         if (res.errors) {
           dispatch(catchError(res.errors));
@@ -49,3 +55,9 @@ export const loginFetchData = (data) => __getData(api.loginUser, loginUser, data
 export const getCurrentUser = (token) => __getData(api.getCurrentUser, loginUser, token);
 
 export const updateProfile = (data, token) => __getData(api.updateProfile, updateUserProfile, data, token);
+
+export const createNewArticle = (data, token) => __getData(api.postNewArticle, articlesFetchData, data, token);
+
+export const editMyArticle = (card, token, endpoint) => __getData(api.editArticle, editArticle, card, token, endpoint);
+
+export const deleteArticle = (token, endpoint) => __getData(api.deleteArticle, articlesFetchData, token, endpoint);

@@ -12,6 +12,7 @@ import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 import Profile from '../Profile';
 import UserArticle from '../UserArticle';
+import EditArticle from '../EditArticle';
 
 import './App.scss';
 
@@ -23,6 +24,7 @@ const App = () => {
     if (cookies.token) {
       dispatch(getCurrentUser(cookies.token));
     }
+    window.scroll(0, 0);
   });
 
   return (
@@ -33,7 +35,16 @@ const App = () => {
           path="/articles/:id"
           component={({ match }) => {
             const { id } = match.params;
+
             return <OneArticle itemId={id} />;
+          }}
+          exact
+        />
+        <Route
+          path="/articles/:id/edit"
+          component={({ match }) => {
+            const { id } = match.params;
+            return <EditArticle itemId={id} />;
           }}
           exact
         />

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
@@ -12,10 +13,25 @@ import './SignUp.scss';
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { loading, error, errorMessage } = useSelector((state) => state.loadingReducer);
   const { user } = useSelector((state) => state.userReducer);
-  const { watch, register, handleSubmit, getValues, errors } = useForm();
+  const { watch, register, handleSubmit, getValues, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
   const [cookies, setCookie] = useCookies();
+
+  let serverUsernameError = false;
+  let serverEmailError = false;
+  const usernameErrorMessage = 'такое имя уже существует';
+  const emailErrorMessage = 'такая почта уже зарегистрирована';
+  let errorUserMessage = null;
+  let errorEmailMessage = null;
+
+  if (errorMessage) {
+    const { username, email } = errorMessage;
+    username ? (serverUsernameError = true) : (serverUsernameError = false);
+    errorUserMessage = username ? usernameErrorMessage : null;
+    email ? (serverEmailError = true) : (serverEmailError = false);
+    errorEmailMessage = email ? emailErrorMessage : null;
+  }
 
   const onSubmit = (data) => {
     dispatch(registrationFetchData(data));
@@ -62,6 +78,12 @@ const SignUp = () => {
             placeholder="Юзернейм"
             ref={register({ required: true, minLength: 3, maxLength: 20 })}
           />
+          {errors?.username?.types?.required && (
+            <span className="sign-up__profile-rulls">обязательно к заполнению</span>
+          )}
+          {errors?.username?.types?.minLength && <span className="sign-up__profile-rulls">минимум 3 символа</span>}
+          {errors?.username?.types?.maxLength && <span className="sign-up__profile-rulls">максимум 20 символов</span>}
+          <span className="sign-up__profile-rulls">{errorUserMessage}</span>
         </label>
 
         <label className="sign-up__form-label">
@@ -73,6 +95,8 @@ const SignUp = () => {
             placeholder="Электронная почта"
             ref={register({ required: true })}
           />
+          {errors?.email?.types?.required && <span className="sign-up__profile-rulls">обязательно к заполнению</span>}
+          <span className="sign-up__profile-rulls">{errorEmailMessage}</span>
         </label>
 
         <label className="sign-up__form-label">

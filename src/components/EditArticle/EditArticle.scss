@@ -12,12 +12,12 @@ input[type="text"]::-webkit-input-placeholder {
         line-height: 24px;
    }
 
-   .sign-up__input-invalid{
+   .edit-article__input-invalid{
     border: 1px solid #fc0303;
 }
 
 
-.sign-up{
+.edit-article{
     display:flex;
     flex-direction: column;
 
@@ -27,11 +27,11 @@ input[type="text"]::-webkit-input-placeholder {
     box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
     border-radius: 6px;
     width: 100%;
-    max-width: 385px;
+    max-width: 950px;
     padding: 48px 32px;
     margin-top: 60px;   
     
-    .sign-up__rulls{
+    .edit-article__rulls{
         color: #F5222D;
         font-family: Roboto;
         font-style: normal;
@@ -40,24 +40,24 @@ input[type="text"]::-webkit-input-placeholder {
         line-height: 22px;
     }
 
-    .sign-up__form-label{
+    .edit-article__form-label{
         position: relative;
         margin-top: 12px;
         display: flex;
         flex-direction: column;
     }
-    .sign-up__form{
+    .edit-article__form{
         padding: 21px 0;
         border-bottom: 1px solid #E8E8E8;
     }
-    .sign-up__have-accaunt{
+    .edit-article__have-accaunt{
         font-size: 14px;
         line-height: 22px;
         width: 100%;
         text-align: center;
     }
 
-    .sign-up__title{
+    .edit-article__title{
         font-family: 'Roboto';
         text-align: center;
         color: #262626;
@@ -66,7 +66,7 @@ input[type="text"]::-webkit-input-placeholder {
         line-height: 28px;
         
     }
-    .sign-up__title-form{
+    .edit-article__title-form{
         color: #262626;
         font-family: Roboto;
         font-style: normal;
@@ -74,50 +74,24 @@ input[type="text"]::-webkit-input-placeholder {
         font-size: 14px;
         line-height: 22px;
     }
-    .sign-up__checkbox-hide{
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        position: absolute;
-    }
-    .sign-up__checkbox-hide:checked + .sign-up__checkbox{
-        background:url('../../img/checked.svg');
-    }
-    .sign-up__checkbox-hide:focus + .sign-up__checkbox{
-        border: 1px solid rgb(63, 250, 63);
-    }
-    .sign-up__checkbox-text{
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 22px;
-        color: #595959;
-        padding: 1.2em;
-    }
-    .sign-up__checkbox{
-        position: absolute;        
-        width:1em;
-        height: 1em;
-        background: white;
-        border: 1px solid #1890FF;
-        box-sizing: border-box;
-        border-radius: 2px;
-        margin-left: -0.2em;
-        margin-top: 3px;
-    }
-    .sign-up__form-input{
+    
+    .edit-article__form-input{
         background: #FFFFFF;
         border: 1px solid #D9D9D9;
         box-sizing: border-box;
         border-radius: 4px;
+        min-width: 50px;        
         width: 100%;
         height: 40px;              
     }
+    .edit-article__tag{
+        max-width: 145px;
+    }
 
-    .sign-up__input-invalid{
+    .edit-article__input-invalid{
         border: 1px solid #fc0303;
     }
-    .sign-up__submit{
+    .edit-article__submit{
         background: #1890FF;
         border-radius: 4px;
         height: 40px;
@@ -125,7 +99,7 @@ input[type="text"]::-webkit-input-placeholder {
         border: none;
         color: white;
     }
-    .sign-up__loading{
+    .edit-article__loading{
         position: absolute;
         width: 100%;
         left: 0px;
@@ -134,13 +108,21 @@ input[type="text"]::-webkit-input-placeholder {
         background: white;
         opacity: 0.8;
     }
-    .sign-up__profile-rulls{
-        color: #F5222D;
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 22px;
+    .edit-article__textarea{
+        min-height: 100px;
+        padding: 10px
     }
-
+    .edit-article__label-tag{
+        flex-direction: row;
+        max-width: 40%;
+    }
+    .edit-article__add-tag{
+        margin:0 0 0 10px;
+    }
+    .edit-article__del-button--hide{
+        display: none;
+    }
+    .edit-article__del-button--view{
+        display: block;
+    }
 }
