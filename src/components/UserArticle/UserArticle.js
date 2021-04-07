@@ -26,6 +26,7 @@ const UserArticle = () => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
     dispatch(createNewArticle(articleData, token));
+    !loading ? <Redirect to="/" /> : null;
   };
 
   const newTextTags = (text, arr) => {

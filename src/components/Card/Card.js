@@ -40,16 +40,18 @@ const Card = ({ card, body }) => {
     <div className={disableStyle}>
       <span>Действительно удалить?</span>
       <div className="card__modal-buttons">
+        <Link to="/">
+          <button
+            type="button"
+            onClick={() => {
+              dispatch(deleteArticle(user.token, slug));
+            }}
+          >
+            ДА
+          </button>
+        </Link>
         <button
-          type="submit"
-          onClick={() => {
-            dispatch(deleteArticle(user.token, slug));
-          }}
-        >
-          ДА
-        </button>
-        <button
-          type="submit"
+          type="button"
           onClick={() => {
             setShowModal(false);
           }}

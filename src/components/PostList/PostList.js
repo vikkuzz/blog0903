@@ -18,7 +18,7 @@ const PostList = () => {
 
   useEffect(() => {
     dispatch(articlesFetchData(page));
-  }, [dispatch, page]);
+  });
 
   const elem = articles.map((item) => <Card card={item} key={item.slug} />);
 
