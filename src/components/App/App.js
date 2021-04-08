@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';

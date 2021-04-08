@@ -9,7 +9,7 @@ const initialState = {
   articlesCount: 0,
   page: 1,
   tags: 1,
-  editArticle: null,
+  editArticle: { tagList: [] },
 };
 
 const articlesReducer = (state = initialState, action) => {
