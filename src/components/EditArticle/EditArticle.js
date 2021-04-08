@@ -18,6 +18,7 @@ const EditArticle = () => {
   const { tagList } = editArticle;
   const { token } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, setValue } = useForm();
+  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState(tagList);
@@ -28,7 +29,12 @@ const EditArticle = () => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
     dispatch(editMyArticle(articleData, token, editArticle.slug));
+    !error ? setArticleCompletedSuccessfully(true) : null;
   };
+
+  if (articleCompletedSuccessfully) {
+    return <Redirect to="/" />;
+  }
 
   const newTextTags = (text, arr) => {
     const result = arr.filter((elem) => elem !== text);
