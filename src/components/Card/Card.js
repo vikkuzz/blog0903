@@ -6,16 +6,18 @@ import ReactMarkdown from 'react-markdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getEditMyArticle, deleteArticle } from '../../redux/actions';
+import { articlesFetchData, getEditMyArticle, deleteArticle, iLikeThisArticle } from '../../redux/actions';
 
 import heart from '../../img/heart.svg';
+import redHeart from '../../img/redHeart.svg';
 import backgroundAvatar from '../../img/background-avatar.png';
 
 import './Card.scss';
 
 const Card = ({ card, body }) => {
-  const { title, author, createdAt, favoritesCount, tagList, description, slug } = card;
+  const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
+  const { page } = useSelector((state) => state.articlesReducer);
   let [showModal, setShowModal] = useState(false);
   const { username, image } = author;
   let idTag = 0;
@@ -23,6 +25,8 @@ const Card = ({ card, body }) => {
   const avatar = !image ? backgroundAvatar : image;
   const fullText = body ? card.body : null;
   const dispatch = useDispatch();
+
+  const like = favorited ? redHeart : heart;
 
   const tags = tagList.map((tag) => {
     idTag += 1;
@@ -99,8 +103,15 @@ const Card = ({ card, body }) => {
               <Link to={`/articles/${slug}`}>
                 <h5 className="card__title">{title}</h5>
               </Link>
-              <button type="button" className="card__heart">
-                <img alt="likes" loading="lazy" className="card__content-heart" src={heart} />
+              <button
+                type="button"
+                className="card__heart"
+                onClick={() => {
+                  dispatch(iLikeThisArticle(slug, user.token));
+                  dispatch(articlesFetchData(page * 20 - 20, user.token));
+                }}
+              >
+                <img alt="likes" loading="lazy" className="card__content-heart" src={like} />
                 <span className="card__heart-counter">{favoritesCount}</span>
               </button>
             </div>

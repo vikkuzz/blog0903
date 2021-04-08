@@ -25,6 +25,8 @@ export const editArticle = (card) => ({ type: 'EDIT_ARTICLE', card });
 
 export const getEditMyArticle = (card) => ({ type: 'GET_EDIT_MY_ARTICLE', card });
 
+export const getFavoritedArticle = (article) => ({ type: 'GET_FAVORITED_ARTICLE', article });
+
 function __getData(apiMethod, action = null, data = null, token = null, endpoint = null) {
   return (dispatch) => {
     apiMethod(data, token, endpoint)
@@ -44,7 +46,7 @@ function __getData(apiMethod, action = null, data = null, token = null, endpoint
   };
 }
 
-export const articlesFetchData = (data) => __getData(api.getArticles, getAllArticles, data);
+export const articlesFetchData = (data, token) => __getData(api.getArticles, getAllArticles, data, token);
 
 export const registrationFetchData = (data) => __getData(api.postNewUser, loginUser, data);
 
@@ -59,3 +61,5 @@ export const createNewArticle = (data, token) => __getData(api.postNewArticle, a
 export const editMyArticle = (card, token, endpoint) => __getData(api.editArticle, editArticle, card, token, endpoint);
 
 export const deleteArticle = (token, endpoint) => __getData(api.deleteArticle, articlesFetchData, token, endpoint);
+
+export const iLikeThisArticle = (data, token) => __getData(api.iLikeThisArticle, getFavoritedArticle, data, token);

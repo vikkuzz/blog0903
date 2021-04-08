@@ -1,8 +1,19 @@
 export default class Api {
   baseAddress = `https://conduit.productionready.io/api/`;
 
-  getArticles = async (page = 0) => {
-    const res = await fetch(`${this.baseAddress}articles?offset=${page}`);
+  getArticles = async (page = 0, token = '') => {
+    let headers = {};
+    if (token) {
+      headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+      };
+    }
+    const res = await fetch(`${this.baseAddress}articles?offset=${page}`, { metod: 'GET', headers });
     const result = await res.json();
     return result;
   };
@@ -120,6 +131,19 @@ export default class Api {
       },
     });
     const result = await res.json();
+    return result;
+  };
+
+  iLikeThisArticle = async (data, token) => {
+    const res = await fetch(`${this.baseAddress}articles/${data}/favorite`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const result = await res.json();
+
     return result;
   };
 }

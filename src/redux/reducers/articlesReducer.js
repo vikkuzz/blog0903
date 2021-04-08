@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable prefer-const */
 /* eslint-disable guard-for-in */
@@ -22,11 +23,6 @@ const articlesReducer = (state = initialState, action) => {
     case 'GET_PAGE':
       page = action.page;
       return { ...state, page };
-
-    // case 'CREATE_ARTICLE':
-    //   articles[0] = action.data.article;
-
-    //   return { ...state, articles };
 
     case 'GET_EDIT_MY_ARTICLE':
       editArticle = action.card;

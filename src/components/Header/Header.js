@@ -2,16 +2,17 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-import { logout } from '../../redux/actions';
+import { logout, articlesFetchData } from '../../redux/actions';
 
 import './Header.scss';
 import backgroundAvatar from '../../img/background-avatar.png';
 
 const Header = () => {
   const { user } = useSelector((state) => state.userReducer);
+  const { page } = useSelector((state) => state.articlesReducer);
   const dispatch = useDispatch();
   const [cookies, remove] = useCookies();
 
@@ -23,6 +24,7 @@ const Header = () => {
       'max-age': -1,
     });
     dispatch(logout());
+    dispatch(articlesFetchData());
   };
 
   if (user) {

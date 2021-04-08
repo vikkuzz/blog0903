@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,10 +16,15 @@ const PostList = () => {
   const dispatch = useDispatch();
   const { articles, articlesCount, page, error } = useSelector((state) => state.articlesReducer);
   const { loading } = useSelector((state) => state.loadingReducer);
+  const { user } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    dispatch(articlesFetchData());
-  }, []);
+    if (user) {
+      dispatch(articlesFetchData(page * 20 - 20, user.token));
+    } else {
+      dispatch(articlesFetchData());
+    }
+  }, [page]);
 
   const elem = articles.map((item) => <Card card={item} key={item.slug} />);
 
