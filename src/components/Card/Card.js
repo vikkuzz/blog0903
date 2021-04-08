@@ -105,8 +105,10 @@ const Card = ({ card, body }) => {
                 type="button"
                 className="card__heart"
                 onClick={() => {
-                  dispatch(iLikeThisArticle(slug, user.token));
-                  dispatch(articlesFetchData(page * 20 - 20, user.token));
+                  if (user) {
+                    dispatch(iLikeThisArticle(slug, user.token));
+                    dispatch(articlesFetchData(page * 20 - 20, user.token));
+                  }
                 }}
               >
                 <img alt="likes" loading="lazy" className="card__content-heart" src={like} />

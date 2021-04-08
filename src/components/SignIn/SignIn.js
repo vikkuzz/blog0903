@@ -6,13 +6,12 @@ import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
 import { loginFetchData } from '../../redux/actions';
-import Spinner from '../Spinner';
 
 import './SignIn.scss';
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { error } = useSelector((state) => state.loadingReducer);
   const { user } = useSelector((state) => state.userReducer);
   const { register, handleSubmit, errors } = useForm();
   const [cookies, setCookie] = useCookies();
@@ -26,13 +25,6 @@ const SignIn = () => {
   const onSubmit = (data) => {
     dispatch(loginFetchData(data));
   };
-
-  const load = (
-    <div className="sign-in__loading">
-      <Spinner />
-    </div>
-  );
-  const isLoading = loading ? load : null;
 
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
 
@@ -75,7 +67,6 @@ const SignIn = () => {
       <span className="sign-in__have-accaunt">
         Нет аккаунта? <Link to="/sign-up">Зарегаться</Link>
       </span>
-      {isLoading}
       {gotAnError}
     </form>
   );

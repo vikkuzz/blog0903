@@ -6,14 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
-import { registrationFetchData, getCurrentUser } from '../../redux/actions';
-import Spinner from '../Spinner';
+import { registrationFetchData } from '../../redux/actions';
 
 import './SignUp.scss';
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const { loading, error, errorMessage } = useSelector((state) => state.loadingReducer);
+  const { error, errorMessage } = useSelector((state) => state.loadingReducer);
   const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, getValues, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
   const [cookies, setCookie] = useCookies();
@@ -51,13 +50,6 @@ const SignUp = () => {
   if (watchPassword !== watchPasswordRepeat) {
     inputClass += ' sign-up__input-invalid';
   } else inputClass = 'sign-up__form-input';
-
-  const load = (
-    <div className="sign-up__loading">
-      <Spinner />
-    </div>
-  );
-  const isLoading = loading ? load : null;
 
   if (user) {
     return <Redirect to="/" />;
@@ -147,7 +139,7 @@ const SignUp = () => {
       <span className="sign-up__have-accaunt">
         Уже есть аккаунт? <Link to="/sign-in">Залогиниться</Link>
       </span>
-      {isLoading}
+
       {gotAnError}
     </form>
   );
