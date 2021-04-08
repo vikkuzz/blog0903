@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { createNewArticle } from '../../redux/actions';
+import { createNewArticle, articlesFetchData } from '../../redux/actions';
 import Spinner from '../Spinner';
 
 import './UserArticle.scss';
@@ -19,6 +19,7 @@ const UserArticle = () => {
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState([]);
+  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
   let countIdx = 0;
   let disableStyle = 'article__del-button--hide';
 
@@ -26,8 +27,12 @@ const UserArticle = () => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
     dispatch(createNewArticle(articleData, token));
-    !loading ? <Redirect to="/" /> : null;
+    !error ? setArticleCompletedSuccessfully(true) : null;
   };
+
+  if (articleCompletedSuccessfully) {
+    return <Redirect to="/" />;
+  }
 
   const newTextTags = (text, arr) => {
     const result = arr.filter((elem) => elem !== text);

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
@@ -17,8 +19,8 @@ const PostList = () => {
   const { loading } = useSelector((state) => state.loadingReducer);
 
   useEffect(() => {
-    dispatch(articlesFetchData(page));
-  });
+    dispatch(articlesFetchData());
+  }, []);
 
   const elem = articles.map((item) => <Card card={item} key={item.slug} />);
 
@@ -33,11 +35,13 @@ const PostList = () => {
 
       <Pagination
         size="small"
-        total={articlesCount / 20}
+        total={articlesCount}
+        showSizeChanger={false}
         current={page}
         onChange={(value) => {
           window.scroll(0, 0);
           dispatch(getPage(value));
+          dispatch(articlesFetchData(value * 20 - 20));
         }}
       />
     </div>

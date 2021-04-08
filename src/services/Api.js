@@ -1,7 +1,7 @@
 export default class Api {
   baseAddress = `https://conduit.productionready.io/api/`;
 
-  getArticles = async (page = 1) => {
+  getArticles = async (page = 0) => {
     const res = await fetch(`${this.baseAddress}articles?offset=${page}`);
     const result = await res.json();
     return result;

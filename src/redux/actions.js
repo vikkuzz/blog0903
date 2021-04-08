@@ -21,8 +21,6 @@ export const logout = () => ({ type: 'LOGOUT' });
 
 export const updateUserProfile = (data) => ({ type: 'UPDATE_USER_PROFILE', data });
 
-export const createArticle = (data) => ({ type: 'CREATE_ARTICLE', data });
-
 export const editArticle = (card) => ({ type: 'EDIT_ARTICLE', card });
 
 export const getEditMyArticle = (card) => ({ type: 'GET_EDIT_MY_ARTICLE', card });
@@ -46,7 +44,7 @@ function __getData(apiMethod, action = null, data = null, token = null, endpoint
   };
 }
 
-export const articlesFetchData = (page) => __getData(api.getArticles, getAllArticles, page);
+export const articlesFetchData = (data) => __getData(api.getArticles, getAllArticles, data);
 
 export const registrationFetchData = (data) => __getData(api.postNewUser, loginUser, data);
 

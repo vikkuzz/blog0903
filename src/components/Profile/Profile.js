@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ const Profile = () => {
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { errorMessage } = useSelector((state) => state.loadingReducer);
   const { register, handleSubmit, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
+  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
 
   let serverUsernameError = false;
   let serverEmailError = false;
@@ -35,7 +36,11 @@ const Profile = () => {
 
   const onSubmit = (data) => {
     dispatch(updateProfile(data, token));
+    !error ? setArticleCompletedSuccessfully(true) : null;
   };
+  if (articleCompletedSuccessfully) {
+    return <Redirect to="/" />;
+  }
 
   const load = (
     <div className="profile__loading">

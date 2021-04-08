@@ -23,6 +23,11 @@ const articlesReducer = (state = initialState, action) => {
       page = action.page;
       return { ...state, page };
 
+    // case 'CREATE_ARTICLE':
+    //   articles[0] = action.data.article;
+
+    //   return { ...state, articles };
+
     case 'GET_EDIT_MY_ARTICLE':
       editArticle = action.card;
       return { ...state, editArticle };
