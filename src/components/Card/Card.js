@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -18,7 +16,7 @@ const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
   const { page } = useSelector((state) => state.articlesReducer);
-  let [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { username, image } = author;
   let idTag = 0;
   let articleEditButtons = null;

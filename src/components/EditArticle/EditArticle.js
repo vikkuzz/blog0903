@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -64,7 +64,7 @@ const EditArticle = () => {
     </div>
   );
 
-  const elem = textTags.map((item, i) => {
+  const elem = textTags.map((item) => {
     countIdx += 1;
     return <ElemOfTags key={countIdx} text={item} />;
   });

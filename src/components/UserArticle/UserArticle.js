@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { createNewArticle, articlesFetchData } from '../../redux/actions';
+import { createNewArticle } from '../../redux/actions';
 import Spinner from '../Spinner';
 
 import './UserArticle.scss';
@@ -15,7 +15,7 @@ const UserArticle = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.loadingReducer);
   const { token } = useSelector((state) => state.userReducer);
-  const { watch, register, handleSubmit, errors, setValue } = useForm();
+  const { watch, register, handleSubmit, setValue } = useForm();
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState([]);

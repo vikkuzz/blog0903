@@ -12,7 +12,6 @@ import backgroundAvatar from '../../img/background-avatar.png';
 
 const Header = () => {
   const { user } = useSelector((state) => state.userReducer);
-  const { page } = useSelector((state) => state.articlesReducer);
   const dispatch = useDispatch();
   const [cookies, remove] = useCookies();
 
