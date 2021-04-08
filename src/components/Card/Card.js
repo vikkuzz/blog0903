@@ -4,7 +4,13 @@ import ReactMarkdown from 'react-markdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { articlesFetchData, getEditMyArticle, deleteArticle, iLikeThisArticle } from '../../redux/actions';
+import {
+  articlesFetchData,
+  getEditMyArticle,
+  deleteArticle,
+  iLikeThisArticle,
+  dislikeThisArticle,
+} from '../../redux/actions';
 
 import heart from '../../img/heart.svg';
 import redHeart from '../../img/redHeart.svg';
@@ -106,8 +112,13 @@ const Card = ({ card, body }) => {
                 className="card__heart"
                 onClick={() => {
                   if (user) {
-                    dispatch(iLikeThisArticle(slug, user.token));
-                    dispatch(articlesFetchData(page * 20 - 20, user.token));
+                    if (favorited) {
+                      dispatch(dislikeThisArticle(slug, user.token));
+                      dispatch(articlesFetchData(page * 20 - 20, user.token));
+                    } else {
+                      dispatch(iLikeThisArticle(slug, user.token));
+                      dispatch(articlesFetchData(page * 20 - 20, user.token));
+                    }
                   }
                 }}
               >

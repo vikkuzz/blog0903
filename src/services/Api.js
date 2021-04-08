@@ -146,4 +146,17 @@ export default class Api {
 
     return result;
   };
+
+  dislikeThisArticle = async (data, token) => {
+    const res = await fetch(`${this.baseAddress}articles/${data}/favorite`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const result = await res.json();
+
+    return result;
+  };
 }

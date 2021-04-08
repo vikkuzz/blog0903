@@ -63,3 +63,5 @@ export const editMyArticle = (card, token, endpoint) => __getData(api.editArticl
 export const deleteArticle = (token, endpoint) => __getData(api.deleteArticle, articlesFetchData, token, endpoint);
 
 export const iLikeThisArticle = (data, token) => __getData(api.iLikeThisArticle, getFavoritedArticle, data, token);
+
+export const dislikeThisArticle = (data, token) => __getData(api.dislikeThisArticle, getFavoritedArticle, data, token);
