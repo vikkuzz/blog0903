@@ -38,6 +38,7 @@ const Profile = () => {
     dispatch(updateProfile(data, token));
     !error ? setArticleCompletedSuccessfully(true) : null;
   };
+
   if (articleCompletedSuccessfully) {
     return <Redirect to="/" />;
   }
