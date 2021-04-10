@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Spin } from 'antd';
 
 import {
   articlesFetchData,
@@ -22,15 +23,17 @@ const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
   const { page } = useSelector((state) => state.articlesReducer);
+  const { loading } = useSelector((state) => state.loadingReducer);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
   const { username, image } = author;
   let idTag = 0;
   let articleEditButtons = null;
   const avatar = !image ? backgroundAvatar : image;
   const fullText = body ? card.body : null;
-  const dispatch = useDispatch();
 
   const like = favorited ? redHeart : heart;
+  const load = loading ? <Spin /> : null;
 
   const tags = tagList.map((tag) => {
     idTag += 1;
@@ -114,16 +117,17 @@ const Card = ({ card, body }) => {
                   if (user) {
                     if (favorited) {
                       dispatch(dislikeThisArticle(slug, user.token));
-                      dispatch(articlesFetchData(page * 20 - 20, user.token));
+                      setTimeout(() => dispatch(articlesFetchData(page * 20 - 20, user.token)), 300);
                     } else {
                       dispatch(iLikeThisArticle(slug, user.token));
-                      dispatch(articlesFetchData(page * 20 - 20, user.token));
+                      setTimeout(() => dispatch(articlesFetchData(page * 20 - 20, user.token)), 300);
                     }
                   }
                 }}
               >
-                <img alt="likes" loading="lazy" className="card__content-heart" src={like} />
+                <img alt="likes" className="card__content-heart" src={like} />
                 <span className="card__heart-counter">{favoritesCount}</span>
+                <span>{load}</span>
               </button>
             </div>
             <div className="card__content-tags">{tags}</div>

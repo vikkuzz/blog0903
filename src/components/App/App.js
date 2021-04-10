@@ -39,7 +39,6 @@ const App = () => {
           path="/articles/:id"
           component={({ match }) => {
             const { id } = match.params;
-
             return <OneArticle itemId={id} />;
           }}
           exact

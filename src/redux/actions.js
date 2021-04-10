@@ -36,7 +36,7 @@ function __getData(apiMethod, action = null, data = null, token = null, endpoint
         } else {
           dispatch(showLoading());
           dispatch(action(res));
-          dispatch(finishLoading());
+          setTimeout(() => dispatch(finishLoading()), 500);
           dispatch(clearErrorMessage());
         }
       })

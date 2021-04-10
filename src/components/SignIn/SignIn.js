@@ -26,7 +26,7 @@ const SignIn = () => {
     dispatch(loginFetchData(data));
   };
 
-  const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+  const gotAnError = error ? 'Ой, ошибочка вышла! Попробуй что-то поменять и нажать еще раз))' : null;
 
   if (user) {
     return <Redirect to="/" />;
@@ -52,11 +52,11 @@ const SignIn = () => {
           <input
             className="sign-up__checkbox-text"
             type="password"
-            ref={register({ required: true, minLength: 6, maxLength: 40 })}
+            ref={register({ required: true, minLength: 8, maxLength: 40 })}
             name="password"
             placeholder="Пароль"
           />
-          {errors.password && <p className="sign-in__rulls">пароль должен состоять минимум из 6 символов</p>}
+          {errors.password && <p className="sign-in__rulls">пароль должен состоять минимум из 8 символов</p>}
         </label>
       </fieldset>
 

@@ -96,11 +96,11 @@ const SignUp = () => {
           <input
             className={inputClass}
             type="password"
-            ref={register({ required: true, minLength: 6, maxLength: 40 })}
+            ref={register({ required: true, minLength: 8, maxLength: 40 })}
             name="password"
             placeholder="Пароль"
           />
-          {errors.password && <p className="sign-up__rulls">пароль должен состоять минимум из 6 символов</p>}
+          {errors.password && <p className="sign-up__rulls">пароль должен состоять минимум из 8 символов</p>}
         </label>
 
         <label className="sign-up__form-label">
