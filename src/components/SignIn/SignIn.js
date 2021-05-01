@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
-import { loginFetchData } from '../../redux/actions';
+import { loginFetchData } from '../../redux/actions/userActions';
 
 import './SignIn.scss';
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.loadingReducer);
-  const { user } = useSelector((state) => state.userReducer);
+  const { user, error } = useSelector((state) => state.userReducer);
   const { register, handleSubmit, errors } = useForm();
   const [cookies, setCookie] = useCookies();
 
@@ -34,7 +33,7 @@ const SignIn = () => {
 
   return (
     <form className="sign-in" onSubmit={handleSubmit(onSubmit)}>
-      <legend className="sign-in__title">Залогиниться</legend>
+      <legend className="sign-in__title">Войти</legend>
       <fieldset className="sign-in__form">
         <label className="sign-in__form-label">
           <span className="sign-in__title-form">Электронная почта</span>
@@ -65,7 +64,7 @@ const SignIn = () => {
       </button>
 
       <span className="sign-in__have-accaunt">
-        Нет аккаунта? <Link to="/sign-up">Зарегаться</Link>
+        Нет аккаунта? <Link to="/sign-up">Зарегистрироваться</Link>
       </span>
       {gotAnError}
     </form>

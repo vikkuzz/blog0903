@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-import { logout, articlesFetchData } from '../../redux/actions';
+import { logout } from '../../redux/actions/userActions';
+import { articlesFetchData, articlesDataPending } from '../../redux/actions/articlesActions';
 
 import './Header.scss';
 import backgroundAvatar from '../../img/background-avatar.png';
@@ -34,12 +35,12 @@ const Header = () => {
     <div>
       <Link to="/sign-up">
         <button type="button" className="header__login header__button">
-          Зарегаться
+          Зарегистрироваться
         </button>
       </Link>
       <Link to="/sign-in">
         <button type="button" className="header__registration header__button">
-          Залогиниться
+          Войти
         </button>
       </Link>
     </div>
@@ -61,7 +62,7 @@ const Header = () => {
       </Link>
 
       <button type="button" className="header__logout header__button" onClick={handleClick}>
-        Разлогиниться
+        Выйти
       </button>
     </div>
   );
@@ -75,7 +76,7 @@ const Header = () => {
   return (
     <header className="header">
       <Link className="header__link header__button" to="/">
-        О боже, это же бложег!
+        Главная|Список статей
       </Link>
       {menu}
     </header>

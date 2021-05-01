@@ -5,7 +5,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
-import { getCurrentUser, articlesFetchData } from '../../redux/actions';
+import { articlesFetchData } from '../../redux/actions/articlesActions';
+import { getCurrentUser } from '../../redux/actions/userActions';
 
 import Header from '../Header';
 import PostList from '../PostList';

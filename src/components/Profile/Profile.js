@@ -4,15 +4,15 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { updateProfile, clearErrorMessage } from '../../redux/actions';
+import { updateProfile, clearErrorMessage } from '../../redux/actions/userActions';
 import Spinner from '../Spinner';
 
 import './Profile.scss';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { token, user } = useSelector((state) => state.userReducer);
-  const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { user } = useSelector((state) => state.userReducer);
+  const { loading, error } = useSelector((state) => state.userReducer);
   const { errorMessage } = useSelector((state) => state.loadingReducer);
   const { register, handleSubmit, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
   const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
@@ -35,7 +35,7 @@ const Profile = () => {
   }
 
   const onSubmit = (data) => {
-    dispatch(updateProfile(data, token));
+    dispatch(updateProfile(data, user.token));
     !error ? setArticleCompletedSuccessfully(true) : null;
   };
 

@@ -5,16 +5,16 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { Spin } from 'antd';
 
-import { createNewArticle } from '../../redux/actions';
-import Spinner from '../Spinner';
+import { createNewArticle } from '../../redux/actions/articlesActions';
 
 import './UserArticle.scss';
 
 const UserArticle = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.loadingReducer);
-  const { token } = useSelector((state) => state.userReducer);
+  const { loading, error } = useSelector((state) => state.articlesReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, setValue } = useForm();
 
   const watchTag = watch('tagList', false);
@@ -26,7 +26,7 @@ const UserArticle = () => {
   const onSubmit = (data) => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
-    dispatch(createNewArticle(articleData, token));
+    dispatch(createNewArticle(articleData, user.token));
     !error ? setArticleCompletedSuccessfully(true) : null;
   };
 
@@ -69,7 +69,7 @@ const UserArticle = () => {
 
   const load = (
     <div className="article__loading">
-      <Spinner />
+      <Spin size="large" />
     </div>
   );
 

@@ -49,6 +49,7 @@ input[type="text"]::-webkit-input-placeholder {
     .sign-up__form{
         padding: 21px 0;
         border-bottom: 1px solid #E8E8E8;
+        margin-bottom: 10px;
     }
     .sign-up__have-accaunt{
         font-size: 14px;
@@ -81,9 +82,6 @@ input[type="text"]::-webkit-input-placeholder {
     }
     .sign-up__checkbox-hide:checked + .sign-up__checkbox{
         background:url('../../img/checked.svg');
-    }
-    .sign-up__checkbox-hide:focus + .sign-up__checkbox{
-        border: 1px solid rgb(63, 250, 63);
     }
     .sign-up__checkbox-text{
         font-family: Roboto;

@@ -6,14 +6,14 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { editMyArticle } from '../../redux/actions';
+import { editMyArticle } from '../../redux/actions/articlesActions';
 import Spinner from '../Spinner';
 
 import './EditArticle.scss';
 
 const EditArticle = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.loadingReducer);
+  const { loading, error } = useSelector((state) => state.articlesReducer);
   const { editArticle } = useSelector((state) => state.articlesReducer);
   const { tagList } = editArticle;
   const { token } = useSelector((state) => state.userReducer);

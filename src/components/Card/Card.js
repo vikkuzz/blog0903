@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
+import { Link, Redirect } from 'react-router-dom';
+import { debounce } from 'lodash';
 
 import {
   articlesFetchData,
@@ -11,7 +13,7 @@ import {
   deleteArticle,
   iLikeThisArticle,
   dislikeThisArticle,
-} from '../../redux/actions';
+} from '../../redux/actions/articlesActions';
 
 import heart from '../../img/heart.svg';
 import redHeart from '../../img/redHeart.svg';
@@ -23,8 +25,10 @@ const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
   const { page } = useSelector((state) => state.articlesReducer);
-  const { loading } = useSelector((state) => state.loadingReducer);
   const [showModal, setShowModal] = useState(false);
+  const [likeThisArticle, setLikeThisArticle] = useState(favorited);
+
+  const [countLikeThisArticle, setCountLikeThisArticle] = useState(favoritesCount);
   const dispatch = useDispatch();
   const { username, image } = author;
   let idTag = 0;
@@ -32,8 +36,11 @@ const Card = ({ card, body }) => {
   const avatar = !image ? backgroundAvatar : image;
   const fullText = body ? card.body : null;
 
-  const like = favorited ? redHeart : heart;
-  const load = loading ? <Spin /> : null;
+  useEffect(() => {
+    setLikeThisArticle(favorited);
+  }, [card]);
+
+  const like = likeThisArticle ? redHeart : heart;
 
   const tags = tagList.map((tag) => {
     idTag += 1;
@@ -98,6 +105,37 @@ const Card = ({ card, body }) => {
   if (user) {
     articleEditButtons = user.username === username ? buttons : null;
   }
+  let redirect = null;
+
+  if (!user) {
+    redirect = (
+      <Link to="/sign-in">
+        <img alt="likes" className="card__content-heart" src={like} />
+        <span className="card__heart-counter">{countLikeThisArticle}</span>
+      </Link>
+    );
+  } else {
+    redirect = (
+      <>
+        <img alt="likes" className="card__content-heart" src={like} />
+        <span className="card__heart-counter">{countLikeThisArticle}</span>
+      </>
+    );
+  }
+
+  const handleLike = () => {
+    if (user) {
+      if (favorited) {
+        dispatch(dislikeThisArticle(slug, user.token));
+        setLikeThisArticle(false);
+        setCountLikeThisArticle((prev) => prev - 1);
+      } else {
+        dispatch(iLikeThisArticle(slug, user.token));
+        setLikeThisArticle(true);
+        setCountLikeThisArticle((prev) => prev + 1);
+      }
+    }
+  };
 
   const date = new Date(createdAt);
 
@@ -110,24 +148,8 @@ const Card = ({ card, body }) => {
               <Link to={`/articles/${slug}`}>
                 <h5 className="card__title">{title}</h5>
               </Link>
-              <button
-                type="button"
-                className="card__heart"
-                onClick={() => {
-                  if (user) {
-                    if (favorited) {
-                      dispatch(dislikeThisArticle(slug, user.token));
-                      setTimeout(() => dispatch(articlesFetchData(page * 20 - 20, user.token)), 300);
-                    } else {
-                      dispatch(iLikeThisArticle(slug, user.token));
-                      setTimeout(() => dispatch(articlesFetchData(page * 20 - 20, user.token)), 300);
-                    }
-                  }
-                }}
-              >
-                <img alt="likes" className="card__content-heart" src={like} />
-                <span className="card__heart-counter">{favoritesCount}</span>
-                <span>{load}</span>
+              <button type="button" className="card__heart" onClick={debounce(handleLike, 300)}>
+                {redirect}
               </button>
             </div>
             <div className="card__content-tags">{tags}</div>

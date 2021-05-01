@@ -1,21 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Pagination } from 'antd';
+import { Pagination, Spin } from 'antd';
 
-import { getPage, articlesFetchData } from '../../redux/actions';
+import { getPage, articlesFetchData } from '../../redux/actions/articlesActions';
 
 import Card from '../Card';
-import Spinner from '../Spinner';
-import Error from '../Error';
 
 import 'antd/dist/antd.css';
 import './PostList.scss';
 
 const PostList = () => {
   const dispatch = useDispatch();
-  const { articles, articlesCount, page, error } = useSelector((state) => state.articlesReducer);
-  const { loading } = useSelector((state) => state.loadingReducer);
+  const { articles, articlesCount, page, error, loading } = useSelector((state) => state.articlesReducer);
+
   const { user } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
@@ -27,9 +25,13 @@ const PostList = () => {
   }, [page]);
 
   const elem = articles.map((item) => <Card card={item} key={item.slug} />);
+  const errorMessage = error ? 'Произошла ошибка при загрузке статей' : null;
 
-  const spinner = loading ? <Spinner /> : null;
-  const errorMessage = error ? <Error /> : null;
+  const spinner = loading ? (
+    <div className="app__spin">
+      <Spin size="large" />
+    </div>
+  ) : null;
 
   return (
     <div className="post-list">

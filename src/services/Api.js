@@ -80,8 +80,9 @@ export default class Api {
       },
       body: JSON.stringify(user),
     });
-    const result = await res.json();
 
+    const result = await res.json();
+    console.log('result', result);
     return result;
   };
 

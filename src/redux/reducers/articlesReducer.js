@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable prefer-const */
@@ -10,6 +11,8 @@ const initialState = {
   page: 1,
   tags: 1,
   editArticle: { tagList: [] },
+  loading: true,
+  error: false,
 };
 
 const articlesReducer = (state = initialState, action) => {
@@ -27,6 +30,21 @@ const articlesReducer = (state = initialState, action) => {
     case 'GET_EDIT_MY_ARTICLE':
       editArticle = action.card;
       return { ...state, editArticle };
+
+    case 'GET_FAVORITED_ARTICLE':
+      const favArt = action.article.article;
+      const articleId = articles.findIndex((item) => item.slug === favArt.slug);
+      articles[articleId] = favArt;
+      return { ...state, articles };
+
+    case 'ARTICLES_DATA_REJECTED':
+      return { ...state, error: true, loading: false };
+
+    case 'ARTICLES_DATA_PENDING':
+      return { ...state, error: false, loading: true };
+
+    case 'ARTICLES_DATA_FULLFIELD':
+      return { ...state, error: false, loading: false };
 
     default:
       return state;

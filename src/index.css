@@ -1,4 +1,13 @@
+*{
+  outline: none;
+}
 body {
   margin: 0;
   background: #EBEEF3;
+}
+input{
+  padding-left: 10px;
+}
+button{
+  cursor: pointer;
 }
