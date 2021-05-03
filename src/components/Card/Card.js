@@ -24,10 +24,9 @@ import './Card.scss';
 const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
-  const { page } = useSelector((state) => state.articlesReducer);
+  const { articles, page } = useSelector((state) => state.articlesReducer);
   const [showModal, setShowModal] = useState(false);
   const [likeThisArticle, setLikeThisArticle] = useState(favorited);
-
   const [countLikeThisArticle, setCountLikeThisArticle] = useState(favoritesCount);
   const dispatch = useDispatch();
   const { username, image } = author;
@@ -105,6 +104,7 @@ const Card = ({ card, body }) => {
   if (user) {
     articleEditButtons = user.username === username ? buttons : null;
   }
+
   let redirect = null;
 
   if (!user) {
@@ -125,10 +125,10 @@ const Card = ({ card, body }) => {
 
   const handleLike = () => {
     if (user) {
-      if (favorited) {
-        dispatch(dislikeThisArticle(slug, user.token));
+      if (likeThisArticle) {
         setLikeThisArticle(false);
         setCountLikeThisArticle((prev) => prev - 1);
+        dispatch(dislikeThisArticle(slug, user.token));
       } else {
         dispatch(iLikeThisArticle(slug, user.token));
         setLikeThisArticle(true);
@@ -148,7 +148,7 @@ const Card = ({ card, body }) => {
               <Link to={`/articles/${slug}`}>
                 <h5 className="card__title">{title}</h5>
               </Link>
-              <button type="button" className="card__heart" onClick={debounce(handleLike, 300)}>
+              <button type="button" className="card__heart" onClick={debounce(handleLike, 500)}>
                 {redirect}
               </button>
             </div>

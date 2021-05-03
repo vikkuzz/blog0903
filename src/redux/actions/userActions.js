@@ -21,15 +21,13 @@ export const userDataFullfield = () => ({ type: 'USER_DATA_FULLFIELD' });
 
 function getData(apiMethod, action = null, data = null, token = null, endpoint = null) {
   return (dispatch) => {
-    console.log(data, token);
     apiMethod(data, token, endpoint).then((res) => {
-      console.log(res);
-      try {
-        dispatch(userDataPending());
+      dispatch(userDataPending());
+      if (res.errors) {
+        dispatch(userDataRejected(res.errors));
+      } else {
         dispatch(action(res));
         dispatch(userDataFullfield());
-      } catch (error) {
-        dispatch(userDataRejected(error));
       }
     });
   };

@@ -22,7 +22,6 @@ const userReducer = (state = initialState, action) => {
 
     case 'USER_DATA_REJECTED':
       errorMessage = action.error;
-      console.log(errorMessage);
       return { ...state, loading: false, error: true, errorMessage };
 
     case 'USER_DATA_PENDING':
@@ -37,7 +36,7 @@ const userReducer = (state = initialState, action) => {
 
     case 'CLEAR_ERROR_MESSAGE':
       errorMessage = null;
-      return { ...state, errorMessage };
+      return { ...state, errorMessage, error: false, loading: false };
 
     default:
       return state;

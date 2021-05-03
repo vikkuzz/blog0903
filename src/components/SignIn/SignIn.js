@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
@@ -5,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
-import { loginFetchData } from '../../redux/actions/userActions';
+import { clearErrorMessage, loginFetchData } from '../../redux/actions/userActions';
 
 import './SignIn.scss';
 
@@ -20,12 +21,15 @@ const SignIn = () => {
       setCookie('token', user.token, { path: '/' });
     }
   });
+  useEffect(() => {
+    dispatch(clearErrorMessage());
+  }, []);
 
   const onSubmit = (data) => {
     dispatch(loginFetchData(data));
   };
 
-  const gotAnError = error ? 'Ой, ошибочка вышла! Попробуй что-то поменять и нажать еще раз))' : null;
+  const gotAnError = error ? 'Почта или пароль не верны' : null;
 
   if (user) {
     return <Redirect to="/" />;

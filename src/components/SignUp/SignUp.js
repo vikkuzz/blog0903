@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
-import { registrationFetchData } from '../../redux/actions/userActions';
+import { registrationFetchData, clearErrorMessage } from '../../redux/actions/userActions';
 import { articlesDataFullfield } from '../../redux/actions/articlesActions';
 
 import './SignUp.scss';
@@ -48,6 +48,9 @@ const SignUp = () => {
       setCookie('token', user.token, { path: '/' });
     }
   });
+  useEffect(() => {
+    dispatch(clearErrorMessage());
+  }, []);
 
   let inputClass = 'sign-up__form-input';
 
@@ -59,7 +62,7 @@ const SignUp = () => {
     return <Redirect to="/" />;
   }
 
-  const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+  const gotAnError = error ? 'Не получилось зарегистрироваться, проверьте ваши данные' : null;
 
   return (
     <form autoComplete="off" className="sign-up" onSubmit={handleSubmit(onSubmit)}>
