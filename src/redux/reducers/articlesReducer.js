@@ -7,6 +7,7 @@
 
 const initialState = {
   articles: [],
+  myArticles: [],
   articlesCount: 0,
   page: 1,
   tags: 1,
@@ -16,7 +17,7 @@ const initialState = {
 };
 
 const articlesReducer = (state = initialState, action) => {
-  let { articles, articlesCount, page, editArticle } = state;
+  let { articles, articlesCount, page, editArticle, myArticles } = state;
   switch (action.type) {
     case 'GET_ARTICLES':
       articles = action.articles.articles;
@@ -45,6 +46,10 @@ const articlesReducer = (state = initialState, action) => {
 
     case 'ARTICLES_DATA_FULLFIELD':
       return { ...state, error: false, loading: false };
+
+    case 'GET_MY_ARTICLES':
+      myArticles = action.articles.articles;
+      return { ...state, myArticles };
 
     default:
       return state;

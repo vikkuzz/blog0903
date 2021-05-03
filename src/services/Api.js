@@ -159,4 +159,17 @@ export default class Api {
 
     return result;
   };
+
+  getMyArticles = async (author, token) => {
+    const res = await fetch(`${this.baseAddress}articles?author=${author}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const result = await res.json();
+    console.log(result);
+    return result;
+  };
 }

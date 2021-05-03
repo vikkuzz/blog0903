@@ -121,9 +121,11 @@
         border: none;
         color: white;
         font-size: 12px;
+        margin-right: 10px;
     }
     .card__buttons{
         position: relative;
+        display: flex;
     }
     .card__modal{
         top:30px;
@@ -157,5 +159,17 @@
     .card__modal-buttons{
         display: flex;
         justify-content: space-around;
+    }
+    .card__btn-edit{
+        width: 30px;
+        height: 30px;
+        background: url('../../img/edit.svg') no-repeat center;
+        background-size: contain;
+    }
+    .card__btn-delete{
+        width: 30px;
+        height: 30px;
+        background: url('../../img/delete.svg') no-repeat center;
+        background-size: cover;
     }
 }

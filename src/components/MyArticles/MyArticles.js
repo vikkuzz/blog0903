@@ -1,31 +1,29 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination, Spin } from 'antd';
 
-import { getPage, articlesFetchData, getMyArticles } from '../../redux/actions/articlesActions';
+import { getMyArticles } from '../../redux/actions/articlesActions';
 
 import Card from '../Card';
 
 import 'antd/dist/antd.css';
-import './PostList.scss';
+import './MyArticles.scss';
 
-const PostList = () => {
+const MyArticles = () => {
   const dispatch = useDispatch();
-  const { articles, articlesCount, page, error, loading } = useSelector((state) => state.articlesReducer);
+  const { articles, myArticles, page, error, loading } = useSelector((state) => state.articlesReducer);
 
   const { user } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     if (user) {
-      dispatch(articlesFetchData(page * 20 - 20, user.token));
       dispatch(getMyArticles(user.username, user.token));
-    } else {
-      dispatch(articlesFetchData());
     }
-  }, [page]);
+  }, [articles]);
 
-  const elem = articles.map((item) => <Card card={item} key={item.slug} />);
+  const elem = myArticles.map((item) => <Card card={item} key={item.slug} />);
   const errorMessage = error ? 'Произошла ошибка при загрузке статей' : null;
 
   const spinner = loading ? (
@@ -34,25 +32,19 @@ const PostList = () => {
     </div>
   ) : null;
 
+  const paginator = <Pagination size="small" total={myArticles.length} showSizeChanger={false} current={page} />;
+
+  const pagination = myArticles.length ? paginator : 'У вас пока нет статей';
+
   return (
     <div className="post-list">
       {elem}
       {spinner}
       {errorMessage}
 
-      <Pagination
-        size="small"
-        total={articlesCount}
-        showSizeChanger={false}
-        current={page}
-        onChange={(value) => {
-          window.scroll(0, 0);
-          dispatch(getPage(value));
-          dispatch(articlesFetchData(value * 20 - 20));
-        }}
-      />
+      {pagination}
     </div>
   );
 };
 
-export default PostList;
+export default MyArticles;

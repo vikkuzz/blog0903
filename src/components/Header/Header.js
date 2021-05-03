@@ -48,6 +48,12 @@ const Header = () => {
 
   const login = (
     <div>
+      <Link to="/my-articles">
+        <button type="button" className="header__create-article header__button">
+          Мои статьи
+        </button>
+      </Link>
+
       <Link to="/new-article">
         <button type="button" className="header__create-article header__button">
           Написать статью

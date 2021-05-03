@@ -16,6 +16,7 @@ import SignIn from '../SignIn';
 import Profile from '../Profile';
 import UserArticle from '../UserArticle';
 import EditArticle from '../EditArticle';
+import MyArticles from '../MyArticles';
 
 import './App.scss';
 
@@ -29,6 +30,7 @@ const App = () => {
       dispatch(getCurrentUser(cookies.token));
       dispatch(articlesFetchData(page * 20 - 20, cookies.token));
     }
+
     window.scroll(0, 0);
   }, []);
 
@@ -58,6 +60,7 @@ const App = () => {
         <Route path="/sign-in" component={SignIn} exact />
         <Route path="/profile" component={Profile} exact />
         <Route path="/new-article" component={UserArticle} exact />
+        <Route path="/my-articles" component={MyArticles} exact />
       </div>
     </BrowserRouter>
   );

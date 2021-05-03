@@ -18,8 +18,11 @@ export const articlesDataPending = () => ({ type: 'ARTICLES_DATA_PENDING' });
 
 export const articlesDataFullfield = () => ({ type: 'ARTICLES_DATA_FULLFIELD' });
 
+export const getOnlyMyArticles = (articles) => ({ type: 'GET_MY_ARTICLES', articles });
+
 function getData(apiMethod, action = null, data = null, token = null, endpoint = null) {
   return (dispatch) => {
+    console.log(data);
     apiMethod(data, token, endpoint)
       .then((res) => {
         dispatch(articlesDataPending());
@@ -43,3 +46,5 @@ export const deleteArticle = (token, endpoint) => getData(api.deleteArticle, art
 export const iLikeThisArticle = (data, token) => getData(api.iLikeThisArticle, getFavoritedArticle, data, token);
 
 export const dislikeThisArticle = (data, token) => getData(api.dislikeThisArticle, getFavoritedArticle, data, token);
+
+export const getMyArticles = (author, token) => getData(api.getMyArticles, getOnlyMyArticles, author, token);
