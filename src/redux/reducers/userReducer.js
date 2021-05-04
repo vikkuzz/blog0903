@@ -3,6 +3,7 @@ const initialState = {
   loading: false,
   error: false,
   errorMessage: null,
+  userProfileUpdateSuccessfull: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -18,17 +19,17 @@ const userReducer = (state = initialState, action) => {
 
     case 'UPDATE_USER_PROFILE':
       user = action.data.user;
-      return { ...state, user };
+      return { ...state, user, userProfileUpdateSuccessfull: true };
 
     case 'USER_DATA_REJECTED':
       errorMessage = action.error;
-      return { ...state, loading: false, error: true, errorMessage };
+      return { ...state, loading: false, error: true, errorMessage, userProfileUpdateSuccessfull: false };
 
     case 'USER_DATA_PENDING':
-      return { ...state, loading: true, error: false };
+      return { ...state, loading: true, error: false, userProfileUpdateSuccessfull: false };
 
     case 'USER_DATA_FULLFIELD':
-      return { ...state, loading: false, error: false };
+      return { ...state, loading: false, error: false, userProfileUpdateSuccessfull: false };
 
     case 'CATCH_ERROR':
       errorMessage = action.error;

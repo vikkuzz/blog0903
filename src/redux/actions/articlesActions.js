@@ -22,12 +22,11 @@ export const getOnlyMyArticles = (articles) => ({ type: 'GET_MY_ARTICLES', artic
 
 function getData(apiMethod, action = null, data = null, token = null, endpoint = null) {
   return (dispatch) => {
-    console.log(data);
     apiMethod(data, token, endpoint)
       .then((res) => {
         dispatch(articlesDataPending());
         dispatch(action(res));
-        dispatch(articlesDataFullfield());
+        setTimeout(() => dispatch(articlesDataFullfield()), 100);
       })
       .catch((error) => {
         dispatch(articlesDataRejected(error));

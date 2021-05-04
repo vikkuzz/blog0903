@@ -56,25 +56,27 @@ const Card = ({ card, body }) => {
 
   const modal = (
     <div className={disableStyle}>
-      <span>Действительно удалить?</span>
+      <span className="card__modal-text">Действительно удалить?</span>
       <div className="card__modal-buttons">
         <Link to="/">
           <button
             type="button"
+            className="card__modal-button submit"
             onClick={() => {
               dispatch(deleteArticle(user.token, slug));
             }}
           >
-            ДА
+            {' '}
           </button>
         </Link>
         <button
           type="button"
+          className="card__modal-button reject"
           onClick={() => {
             setShowModal(false);
           }}
         >
-          НЕТ
+          {' '}
         </button>
       </div>
     </div>
@@ -128,9 +130,7 @@ const Card = ({ card, body }) => {
       if (likeThisArticle) {
         setLikeThisArticle(false);
         setCountLikeThisArticle((prev) => prev - 1);
-        //dispatch(dislikeThisArticle(slug, user.token));
       } else {
-        //dispatch(iLikeThisArticle(slug, user.token));
         setLikeThisArticle(true);
         setCountLikeThisArticle((prev) => prev + 1);
       }

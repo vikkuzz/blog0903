@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import { Spin } from 'antd';
 
 import { articlesFetchData } from '../../redux/actions/articlesActions';
 import { getCurrentUser } from '../../redux/actions/userActions';
@@ -24,20 +25,30 @@ const App = () => {
   const dispatch = useDispatch();
   const [cookies] = useCookies();
   const { page } = useSelector((state) => state.articlesReducer);
+  const { loading } = useSelector((state) => state.articlesReducer);
 
   useEffect(() => {
     if (cookies.token) {
       dispatch(getCurrentUser(cookies.token));
       dispatch(articlesFetchData(page * 20 - 20, cookies.token));
+    } else {
+      dispatch(articlesFetchData());
     }
 
     window.scroll(0, 0);
   }, []);
 
+  const spinner = loading ? (
+    <div className="app__spin">
+      <Spin size="large" />
+    </div>
+  ) : null;
+
   return (
     <BrowserRouter>
       <div className="app">
         <Header />
+        {spinner}
         <Route
           path="/articles/:id"
           component={({ match }) => {

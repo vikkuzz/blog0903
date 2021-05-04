@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
@@ -21,7 +22,7 @@ const MyArticles = () => {
     if (user) {
       dispatch(getMyArticles(user.username, user.token));
     }
-  }, [articles]);
+  }, [user]);
 
   const elem = myArticles.map((item) => <Card card={item} key={item.slug} />);
   const errorMessage = error ? 'Произошла ошибка при загрузке статей' : null;

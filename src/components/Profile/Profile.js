@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -11,18 +11,14 @@ import './Profile.scss';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
-  const { loading, error } = useSelector((state) => state.userReducer);
-  const { errorMessage } = useSelector((state) => state.loadingReducer);
+  const { user, loading, error, errorMessage, userProfileUpdateSuccessfull } = useSelector(
+    (state) => state.userReducer
+  );
   const { register, handleSubmit, errors } = useForm({ criteriaMode: 'all', mode: 'onChange' });
-  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
-
   let serverUsernameError = false;
   let serverEmailError = false;
-
   const usernameErrorMessage = 'такое имя уже существует';
   const emailErrorMessage = 'такая почта уже зарегистрирована';
-
   let errorUserMessage = null;
   let errorEmailMessage = null;
 
@@ -36,12 +32,7 @@ const Profile = () => {
 
   const onSubmit = (data) => {
     dispatch(updateProfile(data, user.token));
-    !error ? setArticleCompletedSuccessfully(true) : null;
   };
-
-  if (articleCompletedSuccessfully) {
-    return <Redirect to="/" />;
-  }
 
   const load = (
     <div className="profile__loading">
@@ -50,9 +41,9 @@ const Profile = () => {
   );
 
   const isLoading = loading ? load : null;
-  const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+  const gotAnError = error ? 'Не получилось обновить профиль' : null;
 
-  if (!user) {
+  if (!user || userProfileUpdateSuccessfull) {
     return <Redirect to="/" />;
   }
 
