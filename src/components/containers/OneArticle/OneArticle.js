@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import Card from '../Card';
+import Card from '../../Card';
 
 const OneArticle = ({ itemId }) => {
   const { articles } = useSelector((state) => state.articlesReducer);

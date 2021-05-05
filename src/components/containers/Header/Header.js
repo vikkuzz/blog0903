@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-import { logout } from '../../redux/actions/userActions';
-import { articlesFetchData, articlesDataPending } from '../../redux/actions/articlesActions';
+import { logout } from '../../../redux/actions/userActions';
+import { articlesFetchData, getMyArticles } from '../../../redux/actions/articlesActions';
 
 import './Header.scss';
-import backgroundAvatar from '../../img/background-avatar.png';
+import backgroundAvatar from '../../../img/background-avatar.png';
 
 const Header = () => {
   const { user } = useSelector((state) => state.userReducer);
+  const { page } = useSelector((state) => state.articlesReducer);
   const dispatch = useDispatch();
   const [cookies, remove] = useCookies();
 
@@ -48,8 +49,12 @@ const Header = () => {
 
   const login = (
     <div>
-      <Link to="/my-articles">
-        <button type="button" className="header__create-article header__button">
+      <Link to="/">
+        <button
+          type="button"
+          className="header__create-article header__button"
+          onClick={() => dispatch(getMyArticles(user.username, user.token))}
+        >
           Мои статьи
         </button>
       </Link>
@@ -81,8 +86,14 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link className="header__link header__button" to="/">
-        Главная|Список статей
+      <Link to="/">
+        <button
+          className="header__link header__button"
+          type="button"
+          onClick={() => dispatch(articlesFetchData(page * 20 - 20, user.token))}
+        >
+          Главная|Список статей
+        </button>
       </Link>
       {menu}
     </header>

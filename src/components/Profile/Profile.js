@@ -3,9 +3,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { Spin } from 'antd';
 
 import { updateProfile, clearErrorMessage } from '../../redux/actions/userActions';
-import Spinner from '../Spinner';
 
 import './Profile.scss';
 
@@ -36,7 +36,7 @@ const Profile = () => {
 
   const load = (
     <div className="profile__loading">
-      <Spinner />
+      <Spin size="large" />
     </div>
   );
 

@@ -1,8 +1,5 @@
 /* eslint-disable no-case-declarations */
-/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-const */
-/* eslint-disable guard-for-in */
 /* eslint-disable no-param-reassign */
 
 const initialState = {
@@ -11,7 +8,7 @@ const initialState = {
   articlesCount: 0,
   page: 1,
   tags: 1,
-  editArticle: { tagList: [] },
+  editArticle: { tagList: [], author: { username: '' } },
   loading: true,
   error: false,
 };

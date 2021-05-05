@@ -6,18 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { Spin } from 'antd';
 
-import { articlesFetchData } from '../../redux/actions/articlesActions';
-import { getCurrentUser } from '../../redux/actions/userActions';
+import { articlesFetchData } from '../../../redux/actions/articlesActions';
+import { getCurrentUser } from '../../../redux/actions/userActions';
 
 import Header from '../Header';
 import PostList from '../PostList';
 import OneArticle from '../OneArticle';
-import SignUp from '../SignUp';
-import SignIn from '../SignIn';
-import Profile from '../Profile';
-import UserArticle from '../UserArticle';
-import EditArticle from '../EditArticle';
-import MyArticles from '../MyArticles';
+import SignUp from '../../SignUp';
+import SignIn from '../../SignIn';
+import Profile from '../../Profile';
+import UserArticle from '../../UserArticle';
+import EditArticle from '../../EditArticle';
 
 import './App.scss';
 
@@ -71,7 +70,6 @@ const App = () => {
         <Route path="/sign-in" component={SignIn} exact />
         <Route path="/profile" component={Profile} exact />
         <Route path="/new-article" component={UserArticle} exact />
-        <Route path="/my-articles" component={MyArticles} exact />
       </div>
     </BrowserRouter>
   );

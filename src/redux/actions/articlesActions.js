@@ -38,7 +38,8 @@ export const articlesFetchData = (data, token) => getData(api.getArticles, getAl
 
 export const createNewArticle = (data, token) => getData(api.postNewArticle, articlesFetchData, data, token);
 
-export const editMyArticle = (card, token, endpoint) => getData(api.editArticle, editArticle, card, token, endpoint);
+export const editMyArticle = (card, token, endpoint) =>
+  getData(api.editArticle, articlesFetchData, card, token, endpoint);
 
 export const deleteArticle = (token, endpoint) => getData(api.deleteArticle, articlesFetchData, token, endpoint);
 
@@ -46,4 +47,4 @@ export const iLikeThisArticle = (data, token) => getData(api.iLikeThisArticle, g
 
 export const dislikeThisArticle = (data, token) => getData(api.dislikeThisArticle, getFavoritedArticle, data, token);
 
-export const getMyArticles = (author, token) => getData(api.getMyArticles, getOnlyMyArticles, author, token);
+export const getMyArticles = (author, token) => getData(api.getMyArticles, getAllArticles, author, token);

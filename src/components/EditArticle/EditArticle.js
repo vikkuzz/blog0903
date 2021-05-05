@@ -5,30 +5,28 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { Spin } from 'antd';
 
 import { editMyArticle } from '../../redux/actions/articlesActions';
-import Spinner from '../Spinner';
 
 import './EditArticle.scss';
 
 const EditArticle = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.articlesReducer);
-  const { editArticle } = useSelector((state) => state.articlesReducer);
+  const { loading, error, editArticle } = useSelector((state) => state.articlesReducer);
   const { tagList } = editArticle;
-  const { token } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, setValue } = useForm();
   const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState(tagList);
   let countIdx = 0;
-  let disableStyle = 'edit-article__del-button--hide';
 
   const onSubmit = (data) => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
-    dispatch(editMyArticle(articleData, token, editArticle.slug));
+    dispatch(editMyArticle(articleData, user.token, editArticle.slug));
     !error ? setArticleCompletedSuccessfully(true) : null;
   };
 
@@ -50,16 +48,12 @@ const EditArticle = () => {
 
   const ElemOfTags = ({ text }) => (
     <div className="edit-article__form-label edit-article__label-tag ">
-      <div className="edit-article__form-input edit-article__tag" style={{ textAlign: 'center' }}>
-        {text}
-      </div>
       <button
-        className="edit-article__submit edit-article__add-tag"
+        className="edit-article__form-input edit-article__tag"
         type="button"
-        style={{ background: '#F5222D' }}
         onClick={() => setTextOfTags(newTextTags(text, textTags))}
       >
-        Удалить
+        {text}
       </button>
     </div>
   );
@@ -71,15 +65,12 @@ const EditArticle = () => {
 
   const load = (
     <div className="edit-article__loading">
-      <Spinner />
+      <Spin size="large" />
     </div>
   );
 
-  textTags.length > 0
-    ? (disableStyle = 'edit-article__del-button--view')
-    : (disableStyle = 'edit-article__del-button--hide');
   const isLoading = loading ? load : null;
-  const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
+  const gotAnError = error ? 'Не удалось обновить статью' : null;
 
   return (
     <form className="edit-article" onSubmit={handleSubmit(onSubmit)}>
@@ -123,7 +114,8 @@ const EditArticle = () => {
       </fieldset>
       <fieldset className="edit-article__form">
         <span className="edit-article__title-form">Добавить тэг</span>
-        {elem}
+        <div className="edit-article__form-wrapper-tags">{elem}</div>
+
         <label className="edit-article__form-label edit-article__label-tag">
           <input
             className="edit-article__form-input edit-article__tag"
@@ -133,7 +125,7 @@ const EditArticle = () => {
             ref={register({ required: false })}
           />
           <button
-            className={`edit-article__submit edit-article__add-tag ${disableStyle}`}
+            className="edit-article__submit edit-article__add-tag"
             type="button"
             style={{ background: '#F5222D' }}
             onClick={() => deleteTag(textTags)}

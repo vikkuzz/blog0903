@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 
 import { registrationFetchData, clearErrorMessage } from '../../redux/actions/userActions';
-import { articlesDataFullfield } from '../../redux/actions/articlesActions';
 
 import './SignUp.scss';
 

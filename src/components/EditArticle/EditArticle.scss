@@ -76,13 +76,17 @@ input[type="text"]::-webkit-input-placeholder {
     }
     
     .edit-article__form-input{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background: #FFFFFF;
         border: 1px solid #D9D9D9;
         box-sizing: border-box;
         border-radius: 4px;
         min-width: 50px;        
         width: 100%;
-        height: 40px;              
+        height: 40px;  
+        padding: 5px;            
     }
     .edit-article__tag{
         max-width: 145px;
@@ -125,4 +129,9 @@ input[type="text"]::-webkit-input-placeholder {
     .edit-article__del-button--view{
         display: block;
     }
+    .edit-article__form-wrapper-tags{
+        display: flex;
+    }
+
+
 }
