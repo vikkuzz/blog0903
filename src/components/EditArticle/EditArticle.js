@@ -75,6 +75,14 @@ const EditArticle = () => {
     </div>
   );
 
+  const handleChange = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      textTags.includes(watchTag) ? setValue('tagList', '') : !watchTag ? null : setTextOfTags([...textTags, watchTag]);
+      setValue('tagList', '');
+    }
+  };
+
   const isLoading = loading ? load : null;
   const gotAnError = error ? 'Не удалось обновить статью' : null;
 
@@ -129,6 +137,7 @@ const EditArticle = () => {
             type="text"
             placeholder="тэг"
             ref={register({ required: false })}
+            onKeyDown={(e) => handleChange(e)}
           />
           <button
             className="edit-article__submit edit-article__add-tag"
