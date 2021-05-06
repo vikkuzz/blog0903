@@ -48,16 +48,12 @@ const UserArticle = () => {
 
   const ElemOfTags = ({ text }) => (
     <div className="article__form-label article__label-tag ">
-      <div className="article__form-input article__tag" style={{ textAlign: 'center' }}>
-        {text}
-      </div>
       <button
-        className="article__submit article__add-tag"
+        className="article__form-input article__tag"
         type="button"
-        style={{ background: '#F5222D' }}
         onClick={() => setTextOfTags(newTextTags(text, textTags))}
       >
-        Удалить
+        {text}
       </button>
     </div>
   );
@@ -116,7 +112,7 @@ const UserArticle = () => {
       </fieldset>
       <fieldset className="article__form">
         <span className="article__title-form">Добавить тэг</span>
-        {elem}
+        <div className="article__form-wrapper-tags">{elem}</div>
         <label className="article__form-label article__label-tag">
           <input
             className="article__form-input article__tag"

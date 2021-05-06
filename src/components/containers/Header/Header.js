@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -16,6 +17,8 @@ const Header = () => {
   const { page } = useSelector((state) => state.articlesReducer);
   const dispatch = useDispatch();
   const [cookies, remove] = useCookies();
+
+  const token = user ? user.token : null;
 
   let avatar = null;
   let username = null;
@@ -90,7 +93,7 @@ const Header = () => {
         <button
           className="header__link header__button"
           type="button"
-          onClick={() => dispatch(articlesFetchData(page * 20 - 20, user.token))}
+          onClick={() => dispatch(articlesFetchData(page * 20 - 20, token))}
         >
           Главная|Список статей
         </button>

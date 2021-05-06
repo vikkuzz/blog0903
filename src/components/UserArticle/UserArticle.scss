@@ -77,6 +77,7 @@ input[type="text"]::-webkit-input-placeholder {
     
     .article__form-input{
         background: #FFFFFF;
+        margin-right: 5px;
         border: 1px solid #D9D9D9;
         box-sizing: border-box;
         border-radius: 4px;
@@ -124,5 +125,8 @@ input[type="text"]::-webkit-input-placeholder {
     }
     .article__del-button--view{
         display: block;
+    }
+    .article__form-wrapper-tags{
+        display: flex;
     }
 }

@@ -4,7 +4,6 @@
 
 const initialState = {
   articles: [],
-  myArticles: [],
   articlesCount: 0,
   page: 1,
   tags: 1,

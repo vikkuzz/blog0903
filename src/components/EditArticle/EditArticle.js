@@ -34,6 +34,12 @@ const EditArticle = () => {
     return <Redirect to="/" />;
   }
 
+  if (user) {
+    if (user.username !== editArticle.author.username) {
+      return <Redirect to="/" />;
+    }
+  }
+
   const newTextTags = (text, arr) => {
     const result = arr.filter((elem) => elem !== text);
     return result;
