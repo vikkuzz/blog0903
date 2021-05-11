@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { debounce } from 'lodash';
 
 import {
   getEditMyArticle,
@@ -21,6 +22,7 @@ import './Card.scss';
 const Card = ({ card, body }) => {
   const { title, author, createdAt, favoritesCount, favorited, tagList, description, slug } = card;
   const { user } = useSelector((state) => state.userReducer);
+  const { articles } = useSelector((state) => state.articlesReducer);
   const [showModal, setShowModal] = useState(false);
   const [likeThisArticle, setLikeThisArticle] = useState(favorited);
   const [countLikeThisArticle, setCountLikeThisArticle] = useState(favoritesCount);
@@ -33,7 +35,8 @@ const Card = ({ card, body }) => {
 
   useEffect(() => {
     setLikeThisArticle(favorited);
-  }, [favorited]);
+    setCountLikeThisArticle(favoritesCount);
+  }, [favoritesCount, favorited]);
 
   const like = likeThisArticle ? redHeart : heart;
 
@@ -90,7 +93,7 @@ const Card = ({ card, body }) => {
       </button>
 
       <Link to={`/articles/${slug}/edit`}>
-        <button className="card__submit card__btn-edit" type="button" onClick={() => dispatch(getEditMyArticle(card))}>
+        <button className="card__submit card__btn-edit" type="button">
           {' '}
         </button>
       </Link>
@@ -143,9 +146,11 @@ const Card = ({ card, body }) => {
           <div className="card__content-header">
             <div className="card__content-title">
               <Link to={`/articles/${slug}`}>
-                <h5 className="card__title">{title}</h5>
+                <button type="button" onClick={() => dispatch(getEditMyArticle(card))}>
+                  <h5 className="card__title">{title}</h5>
+                </button>
               </Link>
-              <button type="button" className="card__heart" onClick={debounce(handleLike, 1000)}>
+              <button type="button" className="card__heart" onClick={handleLike}>
                 {redirect}
               </button>
             </div>

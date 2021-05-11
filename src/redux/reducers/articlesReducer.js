@@ -1,24 +1,30 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 
 const initialState = {
   articles: [],
+  article: null,
   articlesCount: 0,
   page: 1,
   tags: 1,
   editArticle: { tagList: [], author: { username: '' } },
-  loading: true,
+  loading: false,
   error: false,
+  apiFullfield: false,
 };
 
 const articlesReducer = (state = initialState, action) => {
-  let { articles, articlesCount, page, editArticle, myArticles } = state;
+  let { articles, articlesCount, page, editArticle } = state;
   switch (action.type) {
     case 'GET_ARTICLES':
       articles = action.articles.articles;
       articlesCount = action.articles.articlesCount;
-      return { ...state, articles, articlesCount };
+      return { ...state, articles, articlesCount, error: false, loading: false, apiFullfield: true };
+
+    case 'GET_ARTICLE':
+      return { ...state, articles, article: action.article.article, loading: false, error: false, apiFullfield: true };
 
     case 'GET_PAGE':
       page = action.page;
@@ -26,26 +32,38 @@ const articlesReducer = (state = initialState, action) => {
 
     case 'GET_EDIT_MY_ARTICLE':
       editArticle = action.card;
-      return { ...state, editArticle };
+      return { ...state, editArticle, apiFullfield: false };
 
-    case 'GET_FAVORITED_ARTICLE':
-      const favArt = action.article.article;
-      const articleId = articles.findIndex((item) => item.slug === favArt.slug);
-      articles[articleId] = favArt;
-      return { ...state, articles };
+    case 'LIKE_ARTICLE':
+      const like = action.slug;
+      articles = articles.map((item) => {
+        if (item.slug === like) {
+          item.favorited = true;
+          item.favoritesCount += 1;
+        }
+        return item;
+      });
+      return { ...state, articles, error: false, loading: false };
+
+    case 'DISLIKE_ARTICLE':
+      const dislike = action.slug;
+      articles = articles.map((item) => {
+        if (item.slug === dislike) {
+          item.favorited = false;
+          item.favoritesCount -= 1;
+        }
+        return item;
+      });
+      return { ...state, articles, error: false, loading: false };
 
     case 'ARTICLES_DATA_REJECTED':
-      return { ...state, error: true, loading: false };
+      return { ...state, error: true, loading: false, apiFullfield: false };
 
     case 'ARTICLES_DATA_PENDING':
-      return { ...state, error: false, loading: true };
+      return { ...state, error: false, loading: true, apiFullfield: false };
 
     case 'ARTICLES_DATA_FULLFIELD':
-      return { ...state, error: false, loading: false };
-
-    case 'GET_MY_ARTICLES':
-      myArticles = action.articles.articles;
-      return { ...state, myArticles };
+      return { ...state, error: false, loading: false, apiFullfield: false };
 
     default:
       return state;

@@ -57,6 +57,7 @@ const Profile = () => {
             className={serverUsernameError ? 'profile__form-input profile__input-invalid' : 'profile__form-input'}
             name="username"
             type="text"
+            defaultValue={user.username}
             placeholder="Юзернейм"
             ref={register({ required: true, minLength: 3, maxLength: 20 })}
             onChange={() => dispatch(clearErrorMessage())}
@@ -73,6 +74,7 @@ const Profile = () => {
             className={serverEmailError ? 'profile__form-input profile__input-invalid' : 'profile__form-input'}
             type="email"
             name="email"
+            defaultValue={user.email}
             placeholder="Электронная почта"
             ref={register({ required: true })}
           />
@@ -85,6 +87,7 @@ const Profile = () => {
           <input
             className="profile__form-input"
             type="password"
+            defaultValue={null}
             ref={register({ required: true, minLength: 6, maxLength: 40 })}
             name="password"
             placeholder="Пароль"

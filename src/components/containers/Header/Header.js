@@ -95,7 +95,7 @@ const Header = () => {
           type="button"
           onClick={() => dispatch(articlesFetchData(page * 20 - 20, token))}
         >
-          Главная|Список статей
+          Все статьи
         </button>
       </Link>
       {menu}

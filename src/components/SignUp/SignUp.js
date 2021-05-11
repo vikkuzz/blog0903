@@ -138,8 +138,6 @@ const SignUp = () => {
           className="sign-up__checkbox-hide"
           name="hide-checkbox"
           type="checkbox"
-          checked
-          readOnly
           ref={register({ required: true })}
         />
         <span className="sign-up__checkbox" />

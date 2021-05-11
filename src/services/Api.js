@@ -171,4 +171,15 @@ export default class Api {
     const result = await res.json();
     return result;
   };
+
+  getOneArticle = async (slug) => {
+    const res = await fetch(`${this.baseAddress}articles/${slug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    });
+    const result = await res.json();
+    return result;
+  };
 }

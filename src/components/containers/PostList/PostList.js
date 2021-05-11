@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
+import { useCookies } from 'react-cookie';
 
 import { getPage, articlesFetchData } from '../../../redux/actions/articlesActions';
 
@@ -10,10 +12,12 @@ import Card from '../../Card';
 
 import 'antd/dist/antd.css';
 import './PostList.scss';
+import { getCurrentUser } from '../../../redux/actions/userActions';
 
 const PostList = () => {
   const dispatch = useDispatch();
   const { articles, articlesCount, page, error } = useSelector((state) => state.articlesReducer);
+  const [cookies] = useCookies();
 
   let pagination = (
     <Pagination

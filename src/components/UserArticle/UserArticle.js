@@ -16,12 +16,12 @@ const UserArticle = () => {
   const { loading, error } = useSelector((state) => state.articlesReducer);
   const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, setValue } = useForm();
+  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState([]);
-  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
+
   let countIdx = 0;
-  let disableStyle = 'article__del-button--hide';
 
   const onSubmit = (data) => {
     const articleData = { ...data };
@@ -69,7 +69,14 @@ const UserArticle = () => {
     </div>
   );
 
-  textTags.length > 0 ? (disableStyle = 'article__del-button--view') : (disableStyle = 'article__del-button--hide');
+  const handleChange = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      textTags.includes(watchTag) ? setValue('tagList', '') : !watchTag ? null : setTextOfTags([...textTags, watchTag]);
+      setValue('tagList', '');
+    }
+  };
+
   const isLoading = loading ? load : null;
   const gotAnError = error ? 'Ой, что-то пошло не так!' : null;
 
@@ -119,10 +126,11 @@ const UserArticle = () => {
             name="tagList"
             type="text"
             placeholder="тэг"
+            onKeyDown={(e) => handleChange(e)}
             ref={register({ required: false })}
           />
           <button
-            className={`article__submit article__add-tag ${disableStyle}`}
+            className="article__submit article__add-tag"
             type="button"
             style={{ background: '#F5222D' }}
             onClick={() => deleteTag(textTags)}

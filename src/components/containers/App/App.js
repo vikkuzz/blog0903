@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -11,19 +10,19 @@ import { getCurrentUser } from '../../../redux/actions/userActions';
 
 import Header from '../Header';
 import PostList from '../PostList';
-import OneArticle from '../OneArticle';
+import ArticleDetails from '../ArticleDetails';
+import Card from '../../Card';
 import SignUp from '../../SignUp';
 import SignIn from '../../SignIn';
 import Profile from '../../Profile';
 import UserArticle from '../../UserArticle';
-import EditArticle from '../../EditArticle';
 
 import './App.scss';
 
 const App = () => {
   const dispatch = useDispatch();
   const [cookies] = useCookies();
-  const { page } = useSelector((state) => state.articlesReducer);
+  const { articles, page } = useSelector((state) => state.articlesReducer);
   const { loading } = useSelector((state) => state.articlesReducer);
 
   useEffect(() => {
@@ -33,8 +32,6 @@ const App = () => {
     } else {
       dispatch(articlesFetchData());
     }
-
-    window.scroll(0, 0);
   }, []);
 
   const spinner = loading ? (
@@ -52,7 +49,8 @@ const App = () => {
           path="/articles/:id"
           component={({ match }) => {
             const { id } = match.params;
-            return <OneArticle itemId={id} />;
+            const article = articles.find((item) => item.slug === id);
+            return <Card card={article} body={article.body} />;
           }}
           exact
         />
@@ -60,7 +58,7 @@ const App = () => {
           path="/articles/:id/edit"
           component={({ match }) => {
             const { id } = match.params;
-            return <EditArticle itemId={id} />;
+            return <ArticleDetails itemID={id} />;
           }}
           exact
         />

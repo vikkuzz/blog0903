@@ -1,44 +1,37 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-expressions */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Spin } from 'antd';
 
-import { editMyArticle } from '../../redux/actions/articlesActions';
+import { editMyArticle, getOneArticle } from '../../redux/actions/articlesActions';
 
 import './EditArticle.scss';
 
-const EditArticle = () => {
+const EditArticle = ({ editArticle }) => {
   const dispatch = useDispatch();
-  const { loading, error, editArticle } = useSelector((state) => state.articlesReducer);
-  const { tagList } = editArticle;
+  const { article, loading, error, apiFullfield } = useSelector((state) => state.articlesReducer);
   const { user } = useSelector((state) => state.userReducer);
   const { watch, register, handleSubmit, setValue } = useForm();
-  const [articleCompletedSuccessfully, setArticleCompletedSuccessfully] = useState(false);
+
+  const { tagList } = editArticle;
 
   const watchTag = watch('tagList', false);
   const [textTags, setTextOfTags] = useState(tagList);
+
   let countIdx = 0;
 
   const onSubmit = (data) => {
     const articleData = { ...data };
     articleData.tagList = [...textTags, data.tagList];
     dispatch(editMyArticle(articleData, user.token, editArticle.slug));
-    !error ? setArticleCompletedSuccessfully(true) : null;
   };
-
-  if (articleCompletedSuccessfully) {
-    return <Redirect to="/" />;
-  }
-
-  if (user) {
-    if (user.username !== editArticle.author.username) {
-      return <Redirect to="/" />;
-    }
-  }
 
   const newTextTags = (text, arr) => {
     const result = arr.filter((elem) => elem !== text);
