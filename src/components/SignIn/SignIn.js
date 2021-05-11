@@ -53,7 +53,7 @@ const SignIn = () => {
         <label className="sign-in__form-label">
           <span className="sign-in__title-form">Пароль</span>
           <input
-            className="sign-in__checkbox-text"
+            className="sign-in__form-input"
             type="password"
             ref={register({ required: true, minLength: 8, maxLength: 40 })}
             name="password"
