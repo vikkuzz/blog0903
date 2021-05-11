@@ -208,4 +208,10 @@
         background: url('../../img/delete.svg') no-repeat center;
         background-size: cover;
     }
+    .card__button{
+        outline: none;
+        border:none;
+        border-radius: 5px;
+        background: transparent;
+    }
 }

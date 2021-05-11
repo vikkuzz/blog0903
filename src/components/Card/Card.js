@@ -146,7 +146,7 @@ const Card = ({ card, body }) => {
           <div className="card__content-header">
             <div className="card__content-title">
               <Link to={`/articles/${slug}`}>
-                <button type="button" onClick={() => dispatch(getEditMyArticle(card))}>
+                <button type="button" className="card__button" onClick={() => dispatch(getEditMyArticle(card))}>
                   <h5 className="card__title">{title}</h5>
                 </button>
               </Link>
