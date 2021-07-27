@@ -102,7 +102,9 @@ const Card = ({ card, body }) => {
   );
 
   if (body) {
-    articleEditButtons = user.username === username ? buttons : null;
+    if (user) {
+      articleEditButtons = user.username === username ? buttons : null;
+    }
   }
 
   let redirect = null;
